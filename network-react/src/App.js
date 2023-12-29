@@ -3,7 +3,7 @@ import './App.css';
 function App() {
   return (
     <div className="parent-container">
-      {/* <div class="navbar"> */}
+      <div class="navbar">
         <div className="side-navbar">
          <a href="#">Network Project</a>
          <a href="#">Home</a>
@@ -13,7 +13,7 @@ function App() {
           <a href="#"> for you</a>
           <a href="#"> Following</a>
         </div>
-      {/* </div> */}
+      </div>
 
       <div className="main-content"> 
         <p>
