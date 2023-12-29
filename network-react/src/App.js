@@ -8,6 +8,12 @@ function App() {
          <a href="#">Network Project</a>
          <a href="#">Home</a>
          <a href="#">Logout</a>
+         <button className="new-post-button">Post</button>
+         <div className="user-info">
+          <img className="profile-image" src="default-profile.svg.png" alt="user-profile-image"></img>
+          <p className="user-actual-name">Tariq Sarhan</p>
+          <p className="username">teka</p>
+          </div>
         </div>
         <div className= "top-navbar">
           <a href="#"> for you</a>
