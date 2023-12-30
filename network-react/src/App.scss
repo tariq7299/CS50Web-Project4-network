@@ -15,9 +15,9 @@
   border: 1px dotted grey;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 9999;
   display: block;
-  // visibility: hidden;
 
 
   img {
@@ -44,19 +44,45 @@
   position: fixed;
   top: 0px;
   left: 0px;
-  display: flex;
-  flex-flow: column nowrap;
   width: 10rem;
   height: 100%;
-  justify-content: start;
-  align-items: start;
   border-right-style: solid;
   z-index: 2;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  
+  .nav-buttons-and-post-button-wrapper{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: start;
+    align-items: start;
+  }
+  .user-info-wrapper{
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    .profile-image-wrapper {
+      flex-basis: 50px;
+    }
+    .username-wrapper {
+      display: flex;
+      flex-flow: column;
+      p {
+        padding: 0px;
+        margin: 0px;
+      }
+    }
+
+  }
+
+
 }
 
 .profile-image {
   // display: none;
-  width: 30%;
+  width: 100%;
   height:auto;
 }
 .main-content {
