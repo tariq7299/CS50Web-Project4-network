@@ -5,18 +5,19 @@
   background-color: hsl(0, 0, 80%);
   opacity: 70%;
   z-index: 9998;
-  // display: none;
+  display: none;
 }
 .modal-window{
   background-color: white;
-  position: sticky;
-  width: 30vw;
-  height: 20vh;
+  position: fixed;
+  width: 30rem;
+  height: 20rem;
   border: 1px dotted grey;
   top: 50%;
   left: 50%;
   z-index: 9999;
-  // display: none;
+  display: block;
+  // visibility: hidden;
 
 
   img {
