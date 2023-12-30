@@ -3,8 +3,12 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 class User(AbstractUser):
+    first_name = models.CharField(max_length=50, blank=False)
+    last_name = models.CharField(max_length=50, blank=False)
     profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
 
+    def __str__(self):
+        return self.first_name + ' ' + self.last_name
 class Follower(models.Model):
     followed = models.ForeignKey(User, related_name='followed', on_delete=models.CASCADE) 
     follower = models.ForeignKey(User, related_name='follower', on_delete=models.CASCADE)

@@ -1,5 +1,5 @@
 .modal-container {
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   background-color: hsl(0, 0, 80%);
@@ -9,7 +9,7 @@
 }
 .modal-window{
   background-color: white;
-  position: absolute;
+  position: sticky;
   width: 30vw;
   height: 20vh;
   border: 1px dotted grey;

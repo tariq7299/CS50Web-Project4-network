@@ -6,3 +6,5 @@
 -   Use some new techniques in scss like variables and css functions() and other...
 -   Fix href links of links <a> in navbar
 -   Use OOP in python  
+-   Create a media dir in django backend in order to store users profile images
+-   Create an appropriate __str__ functions inside my models schemas in models.py
