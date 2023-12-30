@@ -7,6 +7,8 @@
   z-index: 9998;
   display: none;
 }
+
+
 .modal-window{
   background-color: white;
   position: fixed;
@@ -20,11 +22,55 @@
   display: block;
 
 
-  img {
-    width: 5%;
-    height: auto;
+  button:first-child {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    margin: 5px;
   }
+
+  button:last-child {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    margin: 5px;
+  }
+  .profile-image-input-wrapper{
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+
+    textarea[name="post-content-input"]{
+      width: 80%;
+      height: 80%;
+      border: none;
+
+
+    }
+
+    .profile-image-wrapper{
+      display: flex;
+      flex-direction: column;
+      flex-basis: 50px;
+      width: 80%;
+      height: 80%;
+      img {
+        width: 100%;
+        height: auto;
+      }
+
+    }
+  }
+
+
 }
+
+
 .top-navbar {
   position: fixed;
   top: 0px;
@@ -39,6 +85,7 @@
   /* border: solid; */
 
 }
+
 
 .side-navbar {
   position: fixed;
@@ -80,18 +127,80 @@
 
 }
 
+
 .profile-image {
   // display: none;
   width: 100%;
   height:auto;
 }
+
+
 .main-content {
 
   width: 100%;
   height: 100%;
   padding-top: 6rem;
   padding-left: 11rem;
-  /* position: relative; */
-    /* top: 70px; */
-    /* left: 200px; */
+
+  .post-wrapper{
+    position: relative;
+    width: 100%;
+    height: 10rem;
+    display: flex;
+    flex-flow: row;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    
+    .profile-image-wrapper{
+      display: flex;
+      flex-direction: column;
+      flex-basis: 10rem;
+      width: 80%;
+      height: 80%;
+      img {
+        width: 100%;
+        height: auto;
+      }
+
+    }
+
+    .username-post-content-wrapper{
+      display: flex;
+      flex-flow: column;
+
+      .userActualName-username-date-wrapper{
+        
+        p {
+          padding: 0px;
+          margin: 0px;
+          display: inline;
+        }
+        .userActualName, .username{
+          margin-right: 0.25rem;
+        }
+        .post-content-wrapper{
+          .post-wrapper{
+            text-align: left;
+          }
+        }
+
+      }
+    }
+
+    .like-button{
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+      margin: 5px;
+    }
+
+
+
+  }
+
+
+
+
 }
