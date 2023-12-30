@@ -1,14 +1,31 @@
+import {useState} from 'react';
 import './App.scss';
 
 function App() {
+  const [isActive, setIsActive] = useState(false)
+
+  function handelPostModal() {
+    setIsActive(!isActive)
+  }
+
   return (
-    <div className="parent-container">
-      <div class="navbar">
+      <div className="parent-container" >
+
+      <div className="modal-container" style={ isActive ? {display: 'block'} : {display: 'none'} }>
+      </div>
+      <div className="modal-window" style={ isActive ? {display: 'block'} : {display: 'none'} }>
+        <button onClick={handelPostModal}>Close</button>
+        <img src="default-profile.svg.png"></img>
+        <h2>What's happening?</h2>
+        <button>Post</button>
+      </div>
+
+      <div className="navbar">
         <div className="side-navbar">
          <a href="#">Network Project</a>
          <a href="#">Home</a>
          <a href="#">Logout</a>
-         <button className="new-post-button">Post</button>
+         <button className="new-post-button" onClick={handelPostModal}>Post</button>
          <div className="user-info">
           <img className="profile-image" src="default-profile.svg.png" alt="user-profile-image"></img>
           <p className="user-actual-name">Tariq Sarhan</p>
