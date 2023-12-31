@@ -10,4 +10,7 @@
 -   Create an appropriate __str__ functions inside my models schemas in models.py
 -   Create models serlizers and validators
 -   Use scss skills like functions and variables
--   
+-   Apply some models contraints and validations and error handling (models.py)
+-   Drive components from React
+-   Add flash messages to react
+-   Remove @csrf_token and actually configure csrf tokens in put and post requestsss

@@ -6,12 +6,25 @@ function App() {
   const [postContent, setPostContent] = useState("")
 
   function handleNewPostButton() {
-    // fetch("api/new-post", {
-    //     method: "POST",
-    //     body: JSON.stringify(postContent)
-    //   }
-    // )
-    // .then(()=>Response.json)
+    fetch("/create-new-post", {
+        method: "POST",
+        body: JSON.stringify({postContent: postContent})
+      })
+    .then(response =>{
+      response.json()
+      if (!response.ok) {
+        return response.json().then(result => Promise.reject(result.error));
+      }
+      return response.json();
+    })
+    .then(data => {
+      const SuccessMessage = data.message.toString();
+      console.log("Success message", SuccessMessage)
+      // return
+    })
+    .catch(error => {
+      console.log(error)
+    })
     // // Continue handling succesful response and error response
 
     return

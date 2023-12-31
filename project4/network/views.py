@@ -1,11 +1,12 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
-
-from .models import User
-
+from django.views.decorators.csrf import csrf_exempt
+import json
+from .models import User, Like, Post, Follower
+from .utils import PostHandler, InvalidMethodError
 
 def index(request):
     return render(request, "network/index.html")
@@ -63,5 +64,25 @@ def register(request):
         return render(request, "network/register.html")
 
 
-# def create_new_post(request):
+@csrf_exempt
+def create_new_post(request):
+    try: 
+        post_handler = PostHandler(request)
+        post_handler.save_new_post()
+        return post_handler.save_new_post()
+    except InvalidMethodError as error_msg:
+        return JsonResponse({"error": error_msg}, status=400)
     
+    
+    # # Replace this with the actual user who is signed in rigth now !!!
+    # user = User.objects.get(id=1)
+    # if request.method != 'POST':
+    #     return JsonResponse({"error": "Only POST methods permitted!"}, status=400)
+
+    # data = json.loads(request.body)
+    # post_content = data.get("postContent", "")
+    # post = Post(owner=user, content=post_content)
+
+    # post.save()
+
+    # return JsonResponse({"message": "Post created successfully!"})
