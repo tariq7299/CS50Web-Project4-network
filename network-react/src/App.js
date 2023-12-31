@@ -3,6 +3,23 @@ import './App.scss';
 
 function App() {
   const [isActive, setIsActive] = useState(false)
+  const [postContent, setPostContent] = useState("")
+
+  function handleNewPostButton() {
+    // fetch("api/new-post", {
+    //     method: "POST",
+    //     body: JSON.stringify(postContent)
+    //   }
+    // )
+    // .then(()=>Response.json)
+    // // Continue handling succesful response and error response
+
+    return
+  }
+
+  function handlePostContentInput(e) {
+    setPostContent(e.target.value)
+  }
 
   function handelPostModal() {
     setIsActive(!isActive)
@@ -21,10 +38,10 @@ function App() {
           <div className="profile-image-wrapper">
             <img src="default-profile.svg.png"></img>
           </div>
-          <textarea name="post-content-input" className="post-content" placeholder="What's happening?"></textarea>
+          <textarea name="post-content-input" className="post-content" placeholder="What's happening?" value={postContent} onChange={handlePostContentInput}></textarea>
         </div>
 
-        <button>Post</button>
+        <button disabled={!postContent.length} onClick={handleNewPostButton}>Post</button>
 
       </div>
 

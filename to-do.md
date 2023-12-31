@@ -8,3 +8,6 @@
 -   Use OOP in python  
 -   Create a media dir in django backend in order to store users profile images
 -   Create an appropriate __str__ functions inside my models schemas in models.py
+-   Create models serlizers and validators
+-   Use scss skills like functions and variables
+-   
