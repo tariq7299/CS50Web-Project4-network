@@ -74,15 +74,3 @@ def create_new_post(request):
         return JsonResponse({"error": error_msg}, status=400)
     
     
-    # # Replace this with the actual user who is signed in rigth now !!!
-    # user = User.objects.get(id=1)
-    # if request.method != 'POST':
-    #     return JsonResponse({"error": "Only POST methods permitted!"}, status=400)
-
-    # data = json.loads(request.body)
-    # post_content = data.get("postContent", "")
-    # post = Post(owner=user, content=post_content)
-
-    # post.save()
-
-    # return JsonResponse({"message": "Post created successfully!"})
