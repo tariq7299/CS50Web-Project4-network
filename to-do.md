@@ -28,3 +28,4 @@
 -   Get inspiration (COPY) GeekForGeeks page found in "DjangoTipsAndKeys" bookmark
 -   Also send each profile image of each User to frontend (like the url of each image)
 -   Fix PostHandler() class to approproatly deal with requrst nstead of user_id=1
+

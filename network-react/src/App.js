@@ -3,7 +3,6 @@ import './App.scss';
 import NewPostModal from "./NewPostModal/NewPostModal";
 import Navbar from "./Navbar/Navbar";
 import Posts from "./Posts/Posts";
-import Post from "./Post/Post";
 
 function App() {
   const [isActive, setIsActive] = useState(false)

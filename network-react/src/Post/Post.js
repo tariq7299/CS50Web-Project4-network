@@ -1,8 +1,8 @@
 import "./Post.scss";
 
-export default function Post() {
+export default function Post({post}) {
     return (
-        
+
         <div className="post-wrapper">
             <div className="profile-image-wrapper">
             <img src="default-profile.svg.png"></img>
@@ -10,20 +10,14 @@ export default function Post() {
 
             <div className="username-post-content-wrapper">
             <div className="userActualName-username-date-wrapper">
-                <p className="userActualName">Tariq Sarhan</p>
-                <p className="username">teka</p>
-                <p className="date">Dec 28</p>
+                <p className="userActualName">{post.owner.first_name} {post.owner.last_name}</p>
+                <p className="username">@{post.owner.username}</p>
+                <p className="date">{post.date_released}</p>
                 <button>Follow</button>
             </div>
             <div className="post-content-wrapper">
                 <p className="post-content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam mollis
-                bibendum varius. Praesent ante velit, blandit non tristique non,
-                tincidunt at est. Nam at ex vel ex maximus condimentum eget et mauris.
-                Vestibulum malesuada maximus sem, sit amet malesuada quam auctor at.
-                Suspendisse ut mi congue, tincidunt ex quis, eleifend lacus. Nam
-                suscipit nulla sapien, eu euismod augue condimentum eget. Nulla
-                volutpat ligula massa, vel iaculis elit condimentum ullamcorper.
+                    {post.content}
                 </p>
             </div>
             </div>

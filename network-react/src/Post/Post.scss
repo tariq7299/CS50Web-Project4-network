@@ -5,14 +5,14 @@
     display: flex;
     flex-flow: row;
     gap: 8px;
-    justify-content: center;
-    align-items: center;
+    justify-content: start;
+    align-items: start;
     border: 1px solid black;
     
     .profile-image-wrapper{
       display: flex;
       flex-direction: column;
-      flex-basis: 10rem;
+      flex-basis: 4rem;
       width: 80%;
       height: 80%;
       img {

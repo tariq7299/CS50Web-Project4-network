@@ -67,7 +67,6 @@ def register(request):
 
 @csrf_exempt
 def create_new_post(request):
-    print('fdsdfs')
     try: 
         post_handler = PostHandler(request)
         success_msg = post_handler.save_new_post()
@@ -75,7 +74,6 @@ def create_new_post(request):
     except InvalidMethodError as error_msg:
         return JsonResponse({"error": str(error_msg)}, status=400)
     except ErrorCreatingPost as error_msg:
-        print(str(error_msg))
         return JsonResponse({"error": str(error_msg)}, status=400)
 
 def get_posts(request):
