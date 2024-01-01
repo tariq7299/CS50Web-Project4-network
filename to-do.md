@@ -14,3 +14,17 @@
 -   Drive components from React
 -   Add flash messages to react
 -   Remove @csrf_token and actually configure csrf tokens in put and post requestsss
+
+
+# project4-backend
+-   Add if authenticated or @login_required
+-   Add some validation to create_new_post() view function via .serlization methods of the model
+-   Use this to serlize and deserlize QuerySets in Django models 
+    ```
+    from django.core.serializers import serialize
+
+    serialize("json", SomeModel.objects.all(), cls=LazyEncoder)
+    ```
+-   Get inspiration (COPY) GeekForGeeks page found in "DjangoTipsAndKeys" bookmark
+-   Also send each profile image of each User to frontend (like the url of each image)
+-   Fix PostHandler() class to approproatly deal with requrst nstead of user_id=1

@@ -6,7 +6,8 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from .models import User, Like, Post, Follower
-from .utils import PostHandler, InvalidMethodError
+from .utils import PostHandler, InvalidMethodError, NoPostsYet
+from .serializers import PostSerializer
 
 def index(request):
     return render(request, "network/index.html")
@@ -73,4 +74,18 @@ def create_new_post(request):
     except InvalidMethodError as error_msg:
         return JsonResponse({"error": error_msg}, status=400)
     
+
+
+def get_posts(request):
+    
+    try:
+        
+        post_handler = PostHandler(request)
+        
+        posts = post_handler.get_posts_for_you()
+        
+        return JsonResponse(posts, safe=False)
+        
+    except NoPostsYet as err_msg:
+        return JsonResponse({"message": err_msg}, safe=False)
     

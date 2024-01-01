@@ -8,63 +8,63 @@
     padding-top: 6rem;
     padding-left: 11rem;
   
-    .post-wrapper{
-      position: relative;
-      width: 100%;
-      height: 10rem;
-      display: flex;
-      flex-flow: row;
-      gap: 8px;
-      justify-content: center;
-      align-items: center;
-      border: 1px solid black;
+    // .post-wrapper{
+    //   position: relative;
+    //   width: 100%;
+    //   height: 10rem;
+    //   display: flex;
+    //   flex-flow: row;
+    //   gap: 8px;
+    //   justify-content: center;
+    //   align-items: center;
+    //   border: 1px solid black;
       
-      .profile-image-wrapper{
-        display: flex;
-        flex-direction: column;
-        flex-basis: 10rem;
-        width: 80%;
-        height: 80%;
-        img {
-          width: 100%;
-          height: auto;
-        }
+    //   .profile-image-wrapper{
+    //     display: flex;
+    //     flex-direction: column;
+    //     flex-basis: 10rem;
+    //     width: 80%;
+    //     height: 80%;
+    //     img {
+    //       width: 100%;
+    //       height: auto;
+    //     }
   
-      }
+    //   }
   
-      .username-post-content-wrapper{
-        display: flex;
-        flex-flow: column;
+    //   .username-post-content-wrapper{
+    //     display: flex;
+    //     flex-flow: column;
   
-        .userActualName-username-date-wrapper{
+    //     .userActualName-username-date-wrapper{
           
-          p {
-            padding: 0px;
-            margin: 0px;
-            display: inline;
-          }
-          .userActualName, .username{
-            margin-right: 0.25rem;
-          }
-          .post-content-wrapper{
-            .post-wrapper{
-              text-align: left;
-            }
-          }
+    //       p {
+    //         padding: 0px;
+    //         margin: 0px;
+    //         display: inline;
+    //       }
+    //       .userActualName, .username{
+    //         margin-right: 0.25rem;
+    //       }
+    //       .post-content-wrapper{
+    //         .post-wrapper{
+    //           text-align: left;
+    //         }
+    //       }
   
-        }
-      }
+    //     }
+    //   }
   
-      .like-button{
-        position: absolute;
-        bottom: 0px;
-        right: 0px;
-        margin: 5px;
-      }
+    //   .like-button{
+    //     position: absolute;
+    //     bottom: 0px;
+    //     right: 0px;
+    //     margin: 5px;
+    //   }
   
   
   
-    }
+    // }
   
   
   
