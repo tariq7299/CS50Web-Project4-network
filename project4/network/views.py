@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from .models import User, Like, Post, Follower
-from .utils import PostHandler, InvalidMethodError, NoPostsYet
+from .utils import PostHandler, InvalidMethodError, NoPostsYet, ErrorCreatingPost
 from .serializers import PostSerializer
 
 def index(request):
@@ -67,25 +67,23 @@ def register(request):
 
 @csrf_exempt
 def create_new_post(request):
+    print('fdsdfs')
     try: 
         post_handler = PostHandler(request)
-        post_handler.save_new_post()
-        return post_handler.save_new_post()
+        success_msg = post_handler.save_new_post()
+        return JsonResponse(success_msg)
     except InvalidMethodError as error_msg:
-        return JsonResponse({"error": error_msg}, status=400)
-    
-
+        return JsonResponse({"error": str(error_msg)}, status=400)
+    except ErrorCreatingPost as error_msg:
+        print(str(error_msg))
+        return JsonResponse({"error": str(error_msg)}, status=400)
 
 def get_posts(request):
     
     try:
-        
         post_handler = PostHandler(request)
-        
         posts = post_handler.get_posts_for_you()
-        
         return JsonResponse(posts, safe=False)
-        
     except NoPostsYet as err_msg:
         return JsonResponse({"message": err_msg}, safe=False)
     

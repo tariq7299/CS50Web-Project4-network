@@ -11,7 +11,7 @@ export default function NewPostModal({handelPostModal, isActive}) {
     function handleNewPostButton() {
         fetch("/create-new-post", {
             method: "POST",
-            body: JSON.stringify({postContent: postContent})
+            body: JSON.stringify({content: postContent})
           })
         .then(response =>{
           if (!response.ok) {

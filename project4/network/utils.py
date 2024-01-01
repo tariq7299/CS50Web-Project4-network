@@ -9,6 +9,8 @@ class InvalidMethodError(Exception):
     pass
 class NoPostsYet(Exception):
     pass
+class ErrorCreatingPost(Exception):
+    pass
 
 class PostHandler():
     def __init__(self, request):
@@ -27,15 +29,21 @@ class PostHandler():
     #     self._request = request
         
     def save_new_post(self):
+
+        if self.request.method != "POST":
+            raise InvalidMethodError("Only POST methods permitted!")
+        
         post = json.loads(self.request.body) 
-        serializer =  PostSerializer(data=post)
+        print(post)
+        serializer = PostSerializer(data=post)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(owner=self.user)
             return {"message": "Post created successfully!"}
+        raise ErrorCreatingPost(serializer.errors)
+
         # post_content = data.get("postContent", "")
         # post = Post(owner=self.user, content=post_content)
-        post.save()
-        return JsonResponse({"message": "Post created successfully!"})
+        # post.save()
     
     def get_posts_for_you(self):
         try:
