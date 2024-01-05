@@ -24,6 +24,7 @@ function App() {
 
     <Posts></Posts>
 
+
     </div>
   );
 }

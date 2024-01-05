@@ -34,7 +34,6 @@ class PostHandler():
             raise InvalidMethodError("Only POST methods permitted!")
         
         post = json.loads(self.request.body) 
-        print(post)
         serializer = PostSerializer(data=post)
         if serializer.is_valid():
             serializer.save(owner=self.user)
@@ -47,14 +46,31 @@ class PostHandler():
     
     def get_posts_for_you(self):
         try:
-            posts_query_set = Post.objects.exclude(owner_id=1).order_by('-date_released')
+            posts_query_set = Post.objects.all().order_by('-date_released')
         except Post.DoesNotExist:
-            raise NoPostsYet("Only POST methods permitted!")
+            raise NoPostsYet("No posts Yet!!")
         
-        posts_query_set = Post.objects.exclude(owner=self.user).order_by('-date_released')
     
         serializer = PostSerializer(posts_query_set, many=True)
-
-        return serializer.data
+        
+        posts = serializer.data
+        
+        for post in posts:
+            if Follower.objects.filter(followed_id=post["owner"]["id"], follower=self.user).exists():
+                post["isFollowed"] = True
+            else:
+                post["isFollowed"] = False
+                
+        for post in posts:
+            if Like.objects.filter(liked_by=self.user, liked_post_id=post["id"]).exists():
+                post["isLiked"] = True
+            else:
+                post["isLiked"] = False
+                
+            likes_count = Like.objects.filter(liked_post_id=post["id"]).count()
+            post["likes"] =  likes_count
+        
+         
+        return posts
     
     

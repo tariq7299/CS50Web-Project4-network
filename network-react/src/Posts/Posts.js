@@ -34,7 +34,7 @@ export default function Posts() {
     return (
         <div className="posts-wrapper">
             {posts.map((post) => {
-               return <Post key={post.id} post={post} />
+               return <Post key={post.id} post={post} posts={posts} setPosts={setPosts} />
             })}
         </div>
     );

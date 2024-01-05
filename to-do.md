@@ -1,4 +1,4 @@
-# GLOBAL
+ GLOBAL
 -
 # project4-frontend
 -   Play with React configurations, to know more about react and its configurations and files and stuff, 
@@ -14,7 +14,7 @@
 -   Drive components from React
 -   Add flash messages to react
 -   Remove @csrf_token and actually configure csrf tokens in put and post requestsss
-
+-   Remove Follow button from user own posts in feed
 
 # project4-backend
 -   Add if authenticated or @login_required
@@ -28,4 +28,5 @@
 -   Get inspiration (COPY) GeekForGeeks page found in "DjangoTipsAndKeys" bookmark
 -   Also send each profile image of each User to frontend (like the url of each image)
 -   Fix PostHandler() class to approproatly deal with requrst nstead of user_id=1
-
+-   Clean up utils.py PostHandler()!, like maybe create more functions inside it
+-   Change manual usaer id to request.user in post view in views.py

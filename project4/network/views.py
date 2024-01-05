@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -81,7 +81,30 @@ def get_posts(request):
     try:
         post_handler = PostHandler(request)
         posts = post_handler.get_posts_for_you()
+        
         return JsonResponse(posts, safe=False)
     except NoPostsYet as err_msg:
         return JsonResponse({"message": err_msg}, safe=False)
+
+@csrf_exempt
+def post(request, user_id):
+    current_user = get_object_or_404(User, pk=1)
+    
+    
+
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        if data["isFollowed"]:
+            if not Follower.objects.filter(followed_id=user_id, follower=current_user).exists():                
+                follow = Follower(followed_id=user_id, follower=current_user)
+                follow.save()
+        else:
+            if Follower.objects.filter(followed_id=user_id, follower=current_user).exists():               
+                follow = Follower.objects.filter(followed_id=user_id, follower=current_user).first()
+                follow.delete()
+
+        return JsonResponse({"message": "Successfully updated follow status."})
+
+    return JsonResponse({"error": "Invalid request method."}, status=400)
+            
     
