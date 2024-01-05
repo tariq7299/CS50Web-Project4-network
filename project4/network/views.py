@@ -87,24 +87,37 @@ def get_posts(request):
         return JsonResponse({"message": err_msg}, safe=False)
 
 @csrf_exempt
-def post(request, user_id):
+def post(request, user_id, post_id):
     current_user = get_object_or_404(User, pk=1)
     
     
 
     if request.method == "PUT":
         data = json.loads(request.body)
-        if data["isFollowed"]:
-            if not Follower.objects.filter(followed_id=user_id, follower=current_user).exists():                
-                follow = Follower(followed_id=user_id, follower=current_user)
-                follow.save()
-        else:
-            if Follower.objects.filter(followed_id=user_id, follower=current_user).exists():               
-                follow = Follower.objects.filter(followed_id=user_id, follower=current_user).first()
-                follow.delete()
+        
+        if data.get("isFollowed") is not None:
+            if data["isFollowed"]:
+                if not Follower.objects.filter(followed_id=user_id, follower=current_user).exists():                
+                    follow = Follower(followed_id=user_id, follower=current_user)
+                    follow.save()
+            else:
+                if Follower.objects.filter(followed_id=user_id, follower=current_user).exists():               
+                    follow = Follower.objects.filter(followed_id=user_id, follower=current_user).first()
+                    follow.delete()
 
-        return JsonResponse({"message": "Successfully updated follow status."})
+            return JsonResponse({"message": "Successfully updated follow status."})
+        
+        if data.get("isLiked") is not None:
+            if data["isLiked"]:
+                if not Like.objects.filter(liked_by=current_user, liked_post_id=post_id).exists():                
+                    like = Like(liked_by=current_user, liked_post_id=post_id)
+                    like.save()
+            else:
+                if Like.objects.filter(liked_by=current_user, liked_post_id=post_id).exists():               
+                    like = Like.objects.filter(liked_by=current_user, liked_post_id=post_id).first()
+                    like.delete()
 
+            return JsonResponse({"message": "Successfully updated like status."})
     return JsonResponse({"error": "Invalid request method."}, status=400)
             
     
