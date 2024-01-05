@@ -44,10 +44,12 @@ export default function Post({post, posts, setPosts}) {
         // Second I send a put request to change isLiked for the post owner
         // Change is followed for this user
         setPosts(posts.map((post) => {
-            if (post.id === postId)  {
-                return {...post, isLiked: !isLiked}
+            if (post.id === postId && isLiked) {
+                return {...post, isLiked: false, likes: post.likes-1}
+            } else if (post.id === postId && !isLiked) {
+                return {...post, isLiked: true, likes: post.likes+1}
             } else {
-                return post;
+                return post
             }
         }))
         // Send a put request to server "localhost:8000/<userId>"
@@ -98,7 +100,7 @@ export default function Post({post, posts, setPosts}) {
             </div>
     
             <button className="like-button" onClick={() => handleLikeButton(post.owner.id, post.id, post.isLiked)}>
-                    {post.isLiked ? 'Unlike' : 'Like'}
+                    {post.isLiked ? 'Unlike' : 'Like'} {post.likes}
                 </button>
         </div>
     )
