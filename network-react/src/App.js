@@ -18,17 +18,17 @@ function App() {
   }
 
   return (
-    <Router>
-        <AuthProvider>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route element={<PrivateRoute />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-            </Route>
-            {/* Other routes */}
-          </Routes>
-        </AuthProvider>
-      </Router>
+    // <Router>
+    //     <AuthProvider>
+    //       <Routes>
+    //         <Route path="/login" element={<Login />} />
+    //         <Route element={<PrivateRoute />}>
+    //           <Route path="/dashboard" element={<Dashboard />} />
+    //         </Route>
+    //         {/* Other routes */}
+    //       </Routes>
+    //     </AuthProvider>
+    //   </Router>
     
       <div className="parent-container" >
 
