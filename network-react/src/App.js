@@ -1,45 +1,24 @@
-import {useState} from 'react';
-import './App.scss';
-import NewPostModal from "./NewPostModal/NewPostModal";
-import Navbar from "./Navbar/Navbar";
-import Posts from "./Posts/Posts";
-
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Login from "./routes/Login/Login";
+import Dashboard from "./routes/Dashboard/Dashboard";
 import AuthProvider from "./hooks/AuthProvider";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
 
 
 function App() {
-  const [isActive, setIsActive] = useState(false)
-  // const [postContent, setPostContent] = useState("")
-  
-
-  
-  function handelPostModal() {
-    setIsActive(!isActive)
-  }
-
+ 
   return (
-    // <Router>
-    //     <AuthProvider>
-    //       <Routes>
-    //         <Route path="/login" element={<Login />} />
-    //         <Route element={<PrivateRoute />}>
-    //           <Route path="/dashboard" element={<Dashboard />} />
-    //         </Route>
-    //         {/* Other routes */}
-    //       </Routes>
-    //     </AuthProvider>
-    //   </Router>
-    
-      <div className="parent-container" >
-
-        <NewPostModal handelPostModal={handelPostModal} isActive={isActive}></NewPostModal>
-
-        <Navbar handelPostModal={handelPostModal}></Navbar>
-
-        <Posts></Posts>
-
-
-        </div>
+    <Router>
+        <AuthProvider>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route element={<PrivateRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
+            {/* Other routes */}
+          </Routes>
+        </AuthProvider>
+      </Router>
     
   );
 }

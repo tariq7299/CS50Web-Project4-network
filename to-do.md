@@ -30,3 +30,5 @@
 -   Fix PostHandler() class to approproatly deal with requrst nstead of user_id=1
 -   Clean up utils.py PostHandler()!, like maybe create more functions inside it
 -   Change manual usaer id to request.user in post view in views.py
+-   Remove @csrf exempt from views.py
+-   Provide user profilel image for frontend

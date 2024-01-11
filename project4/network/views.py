@@ -12,23 +12,27 @@ from .serializers import PostSerializer
 def index(request):
     return render(request, "network/index.html")
 
-
+@csrf_exempt
 def login_view(request):
     if request.method == "POST":
+        data = json.loads(request.body)
+        
+        print(data)
 
         # Attempt to sign user in
-        username = request.POST["username"]
-        password = request.POST["password"]
+        username = data["username"]
+        password = data["password"]
         user = authenticate(request, username=username, password=password)
 
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            print("request.user", request.user)
+            data = {"username": request.user.username, "email": request.user.email, "firstname": request.user.first_name, "lastname": request.user.last_name}
+            print("data", data)
+            return JsonResponse({"data": data})
         else:
-            return render(request, "network/login.html", {
-                "message": "Invalid username and/or password."
-            })
+            return JsonResponse({"message": "Invalid username and/or password"})
     else:
         return render(request, "network/login.html")
 
@@ -40,12 +44,13 @@ def logout_view(request):
 
 def register(request):
     if request.method == "POST":
-        username = request.POST["username"]
-        email = request.POST["email"]
+        data = json.loads(request.body)
+        username = data["username"]
+        email = data["email"]
 
         # Ensure password matches confirmation
-        password = request.POST["password"]
-        confirmation = request.POST["confirmation"]
+        password = data["password"]
+        confirmation = data["confirmation"]
         if password != confirmation:
             return render(request, "network/register.html", {
                 "message": "Passwords must match."

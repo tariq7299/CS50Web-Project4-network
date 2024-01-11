@@ -1,20 +1,23 @@
 import { useState } from "react";
+import { useAuth } from "../../hooks/AuthProvider";
 
-import "./login.scss";
+import "./Login.scss";
 
 
-export default function login() {
+export default function Login() {
     
 
       const [input, setInput] = useState({
         username: "",
         password: "",
       });
-    
+      
+      const auth = useAuth();
       const handleSubmitEvent = (e) => {
         e.preventDefault();
         if (input.username !== "" && input.password !== "") {
-          //dispatch action from hooks
+          auth.loginAction(input);
+          return;
         }
         alert("please provide a valid input");
       };
@@ -30,17 +33,17 @@ export default function login() {
       return (
         <form onSubmit={handleSubmitEvent}>
           <div className="form_control">
-            <label htmlFor="user-email">Email:</label>
+            <label htmlFor="user-username">Username:</label>
             <input
-              type="email"
-              id="user-email"
-              name="email"
-              placeholder="example@yahoo.com"
-              aria-describedby="user-email"
+              type="text"
+              id="user-username"
+              name="username"
+              placeholder="Enter your username"
+              aria-describedby="user-username"
               aria-invalid="false"
               onChange={handleInput}
             />
-            <div id="user-email" className="sr-only">
+            <div id="user-username" className="sr-only">
               Please enter a valid username. It must contain at least 6 characters.
             </div>
           </div>

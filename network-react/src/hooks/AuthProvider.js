@@ -15,6 +15,7 @@ function AuthProvider ({ children }) {
 
 
   const loginAction = async (data) => {
+    console.log("data", data)
     try {
       const response = await fetch("/login", {
         method: "POST",
@@ -24,8 +25,12 @@ function AuthProvider ({ children }) {
         body: JSON.stringify(data),
       });
       const res = await response.json();
+      console.log("res", res)
+      console.log("res", res)
+      console.log("res.data", res.data)
       if (res.data) {
-        setUser(res.data.user);
+        console.log("res.data@#@#@@", res.data)
+        setUser(res.data);
         // setToken(res.token);
         // localStorage.setItem("site", res.token);
 

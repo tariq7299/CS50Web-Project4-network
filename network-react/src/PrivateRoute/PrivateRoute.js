@@ -4,7 +4,11 @@ import { useAuth } from "../hooks/AuthProvider";
 
 const PrivateRoute = () => {
   const user = useAuth();
-  if (!user) return <Navigate to="/login" />;
+  console.log("user", user)
+  // if(user.user){
+  //   return console.log("user54")
+  // }
+  if (!user.user) return <Navigate to="/login" />;
   return <Outlet />;
 };
 
