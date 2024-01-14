@@ -8,14 +8,14 @@ function AuthProvider ({ children }) {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  function CheckIfAuthenticated() {
+  async function CheckIfAuthenticated() {
     
-      fetch("/get-user-info")
+      return fetch("/get-user-info")
         .then(response => {
           if (!response.ok) {
-            console.log("User is not authenticated, please log in!")
-            response.json().then(result => Promise.reject(result.error));
+            return response.json().then(result => Promise.reject(result.error));
           } else {
+            console.log(response.json())
             return true
           }
         })
@@ -23,10 +23,11 @@ function AuthProvider ({ children }) {
           console.error('Error:', error);
           return false
         });
+
   }
 
   const loginAction = async (data) => {
-    console.log("data", data)
+    // console.log("data", data)
     try {
       const response = await fetch("/login", {
         method: "POST",
@@ -36,15 +37,14 @@ function AuthProvider ({ children }) {
         body: JSON.stringify(data),
       });
       const res = await response.json();
-      console.log("res", res)
-      console.log("res.data", res.data)
+      // console.log("res", res)
+      // console.log("res.data", res.data)
       if (res.data) {
-        console.log("res.data@#@#@@", res.data)
+        // console.log("res.data@#@#@@", res.data)
         setUser(res.data);
         // setToken(res.token);
         // localStorage.setItem("site", res.token);
 
-        // edit this !!!!!
         navigate("/dashboard");
         return;
       }
@@ -56,8 +56,6 @@ function AuthProvider ({ children }) {
 
   const logOut = () => {
     setUser(null);
-    // setToken("");
-    // localStorage.removeItem("site");
     navigate("/login");
   };
 

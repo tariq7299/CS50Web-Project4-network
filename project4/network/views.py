@@ -133,6 +133,8 @@ def get_user_info(request):
     
     if request.user is None:
         return JsonResponse({"error": "User is not authenticated, please log in !"}, status=400)
+    # user_info = UserSerlizer(request.user)
+    # print(user_info)
 
     user_name = request.user.username
     first_name = request.user.first_name  # Corrected here
