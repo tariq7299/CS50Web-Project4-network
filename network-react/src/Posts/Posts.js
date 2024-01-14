@@ -16,7 +16,7 @@ export default function Posts() {
                 return response.json()
             })
             .then((posts) => {
-                console.log("POSTS", posts)
+                // console.log("POSTS", posts)
                 setPosts(posts)
                 setLoading(false);
             })
