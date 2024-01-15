@@ -7,9 +7,13 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from .models import User, Like, Post, Follower
 from .utils import PostHandler, InvalidMethodError, NoPostsYet, ErrorCreatingPost
-from .serializers import PostSerializer
+from .serializers import PostSerializer, UserSerializer
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import BasicAuthentication
+
+from django.contrib.auth.decorators import login_required
+
 
 def index(request):
     return render(request, "network/index.html")
@@ -38,7 +42,7 @@ def login_view(request):
     else:
         return render(request, "network/login.html")
 
-
+@csrf_exempt
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
@@ -100,6 +104,9 @@ def post(request, user_id, post_id):
     
 
     if request.method == "PUT":
+        # Remove this !!!!!!!
+        logout(request)
+        print(request.user)
         data = json.loads(request.body)
         
         if data.get("isFollowed") is not None:
@@ -127,21 +134,15 @@ def post(request, user_id, post_id):
             return JsonResponse({"message": "Successfully updated like status."})
     return JsonResponse({"error": "Invalid request method."}, status=400)
 
-@api_view(['GET']) 
-@permission_classes([IsAuthenticated]) 
-def get_user_info(request): 
+
+
+@api_view(['GET'])
+@authentication_classes([BasicAuthentication])
+@permission_classes([IsAuthenticated])
+def get_user_info(request):
     
-    if request.user is None:
-        return JsonResponse({"error": "User is not authenticated, please log in !"}, status=400)
-    # user_info = UserSerlizer(request.user)
-    # print(user_info)
-
-    user_name = request.user.username
-    first_name = request.user.first_name  # Corrected here
-    last_name = request.user.last_name  # Corrected here
-
-    user_info = {"user_name": user_name, "first_name": first_name, "last_name": last_name}
-
-    return JsonResponse(user_info)
+    print(request.user)
+    is_authenticated = {"is_authenticated" : True}
+    return JsonResponse(is_authenticated)
     
     

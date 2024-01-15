@@ -12,12 +12,13 @@ function AuthProvider ({ children }) {
     
       return fetch("/get-user-info")
         .then(response => {
-          if (!response.ok) {
-            return response.json().then(result => Promise.reject(result.error));
-          } else {
-            console.log(response.json())
+         return response.json()
+        })
+        .then(data => {
+          if (data.is_authenticated){
             return true
           }
+          return false
         })
         .catch(error => {
           console.error('Error:', error);

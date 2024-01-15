@@ -1,6 +1,27 @@
 import "./Navbar.scss";
+import { useNavigate } from "react-router-dom";
+
 
 export default function Navbar({handelPostModal}) {
+    
+    const navigate = useNavigate();
+
+    function handleLogout() {
+
+        fetch("/logout", {
+            method: "POST",
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(result => Promise.reject(result.error));
+              }
+              navigate("/login");
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+    
 
     return (
         <div className="navbar">
@@ -9,7 +30,7 @@ export default function Navbar({handelPostModal}) {
                 <div className="nav-buttons-and-post-button-wrapper">
                     <a href="#">Network Project</a>
                     <a href="#">Home</a>
-                    <a href="#">Logout</a>
+                    <button onClick={handleLogout} >Logout</button>
                     <button className="new-post-button" onClick={handelPostModal}>Post</button>
                 </div>
 

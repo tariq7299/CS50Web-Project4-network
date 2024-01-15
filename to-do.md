@@ -15,6 +15,8 @@
 -   Add flash messages to react
 -   Remove @csrf_token and actually configure csrf tokens in put and post requestsss
 -   Remove Follow button from user own posts in feed
+-   Add register link in logout !
+
 
 # project4-backend
 -   Add if authenticated or @login_required
@@ -32,3 +34,5 @@
 -   Change manual usaer id to request.user in post view in views.py
 -   Remove @csrf exempt from views.py
 -   Provide user profilel image for frontend
+-   Add UserSerlizer to login view
+-   Add loginrequired to each function
