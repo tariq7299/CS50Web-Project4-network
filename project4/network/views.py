@@ -19,6 +19,7 @@ from rest_framework.response import Response
 def index(request):
     return render(request, "network/index.html")
 
+
 @csrf_exempt
 def login_view(request):
     if request.method == "POST":
@@ -43,10 +44,12 @@ def login_view(request):
     else:
         return render(request, "network/login.html")
 
+
 @csrf_exempt
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
+
 
 @csrf_exempt
 def register(request):
@@ -102,7 +105,6 @@ def get_posts_for_you(request):
         return JsonResponse({"message": err_msg}, safe=False)
 
 
-
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_posts_following(request):
@@ -115,10 +117,11 @@ def get_posts_following(request):
         return JsonResponse({"message": err_msg}, safe=False)
 
 
-
+# THis required in BASIC AUTHENTICATION
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
 @csrf_exempt
 def post(request, user_id, post_id):
-    
     if request.method == "PUT":
         # Remove this !!!!!!!
         # logout(request)

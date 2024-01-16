@@ -2,7 +2,8 @@ import "./Post.scss";
 
 export default function Post({post, posts, setPosts}) {
 
-
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    
     // Here I do two things:
     //  first I change the posts variable that is in react state (I could instead refetch posts data from the server again, but instead I just changed the posts value i have here)
     // Second I send a put request to change isFollowed for the post owner
@@ -20,6 +21,7 @@ export default function Post({post, posts, setPosts}) {
             method: "PUT",
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + btoa(`${userData.username}:${userData.password}`)
             },
             body: JSON.stringify({isFollowed: !isFollowed })
         })
