@@ -22,7 +22,9 @@ export default function Posts() {
             apiUrl = "/get-posts-following"
         }
 
-        fetch(apiUrl)
+        fetch(apiUrl,
+            { method: 'GET',
+            headers: { 'Authorization': 'Basic ' + btoa(`${userData.username}:${userData.password}`) }})
             .then((response) => {
                 if (!response.ok) {
                 return response.json().then((data) => Promise.reject(data.error))

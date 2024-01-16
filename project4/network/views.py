@@ -88,7 +88,7 @@ def create_new_post(request):
     except ErrorCreatingPost as error_msg:
         return JsonResponse({"error": str(error_msg)}, status=400)
 
-
+# @permission_classes[IsAuthenticated]
 def get_posts_for_you(request):
     
     try:

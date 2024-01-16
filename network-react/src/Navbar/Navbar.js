@@ -23,11 +23,14 @@ export default function Navbar({handelPostModal}) {
         //     console.error('Error:', error);
         // });
         auth.logOut()
-        
+
         return
         
     }
     
+    const userData = JSON.parse(localStorage.getItem("userData"))
+    console.log("userData", userData)
+    console.log("userData", userData.username)
 
     return (
         <div className="navbar">
@@ -45,8 +48,8 @@ export default function Navbar({handelPostModal}) {
                         <img className="profile-image" src="default-profile.svg.png" alt="user-profile-image"></img>
                     </div>
                     <div className="username-wrapper">              
-                        <p className="user-actual-name">Tariq Sarhan</p>
-                        <p className="username">teka</p>
+                        <p className="user-actual-name">{userData.firstname}{' '}{userData.lastname}</p>
+                        <p className="username">{userData.username}</p>
                     </div>
                 </div>
             </div>
