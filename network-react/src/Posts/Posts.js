@@ -17,7 +17,6 @@ export default function Posts() {
 
         if (location.pathname === "/dashboard") {
             apiUrl = "/get-posts-for-you"
-            console.log(apiUrl)
         } else {
             apiUrl = "/get-posts-following"
         }
@@ -32,7 +31,6 @@ export default function Posts() {
                 return response.json()
             })
             .then((posts) => {
-                // console.log("POSTS", posts)
                 setPosts(posts)
                 setLoading(false);
             })

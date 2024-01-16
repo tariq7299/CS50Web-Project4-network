@@ -49,9 +49,7 @@ function AuthProvider ({ children }) {
         userData["firsname"] = res.user_data.firstname
         userData["lastname"] = res.user_data.lastname
         userData["email"] = res.user_data.email
-        console.log("userDataForm input", userData)
         localStorage.setItem("userData", JSON.stringify(userData));
-        console.log('JSON.parse(localStorage.getItem("userData"))', JSON.parse(localStorage.getItem("userData")))
         navigate("/dashboard");
         return;
       }

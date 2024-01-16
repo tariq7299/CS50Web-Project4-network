@@ -29,8 +29,6 @@ export default function Navbar({handelPostModal}) {
     }
     
     const userData = JSON.parse(localStorage.getItem("userData"))
-    console.log("userData", userData)
-    console.log("userData", userData.username)
 
     return (
         <div className="navbar">
