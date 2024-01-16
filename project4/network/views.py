@@ -54,28 +54,28 @@ def logout_view(request):
 @csrf_exempt
 def register(request):
     if request.method == "POST":
-        data = json.loads(request.body)
-        username = data["username"]
-        email = data["email"]
-
+        user_data = json.loads(request.body)
+        
+        print("user_data", user_data)
+        firstname = user_data["firstname"]
+        lastname = user_data["lastname"]
+        email = user_data["email"]
+        username = user_data["username"]
+        
         # Ensure password matches confirmation
-        password = data["password"]
-        confirmation = data["confirmation"]
+        password = user_data["password"]
+        confirmation = user_data["confirmation"]
         if password != confirmation:
-            return render(request, "network/register.html", {
-                "message": "Passwords must match."
-            })
+            return JsonResponse({"message": "password must match"})
 
         # Attempt to create new user
         try:
-            user = User.objects.create_user(username, email, password)
+            user = User.objects.create_user(username=username, email=email, password=password, first_name=firstname, last_name=lastname)
             user.save()
         except IntegrityError:
-            return render(request, "network/register.html", {
-                "message": "Username already taken."
-            })
+            return JsonResponse({"message": "Username already taken."})
         login(request, user)
-        return HttpResponseRedirect(reverse("index"))
+        return JsonResponse({"user_data": user_data})
     else:
         return render(request, "network/register.html")
 

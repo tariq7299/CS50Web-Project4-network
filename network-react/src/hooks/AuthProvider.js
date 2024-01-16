@@ -59,13 +59,39 @@ function AuthProvider ({ children }) {
     }
   };
 
+  const registerAction = async (userData) => {
+    try {
+      const response = await fetch("/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+      const res = await response.json();
+      if (res.user_data) {
+        userData["firsname"] = res.user_data.firstname
+        userData["lastname"] = res.user_data.lastname
+        userData["email"] = res.user_data.email
+        localStorage.setItem("userData", JSON.stringify(userData));
+        navigate("/dashboard");
+        return;
+      }
+      throw new Error(res.message);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+
+
   const logOut = () => {
     localStorage.removeItem("userData")
     navigate("/login");
   };
 
   return (
-    <AuthContext.Provider value={{loginAction, logOut, CheckIfAuthenticated }}>
+    <AuthContext.Provider value={{CheckIfAuthenticated, loginAction, registerAction, logOut}}>
       {children}
     </AuthContext.Provider>
   );

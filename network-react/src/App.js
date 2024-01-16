@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./routes/Login/Login";
+import Register from "./routes/Register/Register";
 import Dashboard from "./routes/Dashboard/Dashboard";
 import Following from "./routes/Following/Following";
 import AuthProvider from "./hooks/AuthProvider";
@@ -12,6 +13,7 @@ function App() {
     <BrowserRouter>
         <AuthProvider>
           <Routes>
+            <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route element={<PrivateRoute />}>
               <Route path="/" element={<Root />}>
