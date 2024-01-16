@@ -9,6 +9,7 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name
+    
 class Follower(models.Model):
     followed = models.ForeignKey(User, related_name='followed', on_delete=models.CASCADE) 
     follower = models.ForeignKey(User, related_name='follower', on_delete=models.CASCADE)

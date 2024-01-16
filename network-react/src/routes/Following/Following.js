@@ -7,7 +7,7 @@ import Posts from "../../Posts/Posts";
 // import AuthProvider from "./../hooks/AuthProvider";
 
 
-function Dashboard() {
+function Following() {
   const [isActive, setIsActive] = useState(false)
   // const [postContent, setPostContent] = useState("")
   

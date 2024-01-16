@@ -3,7 +3,8 @@ import "./Posts.scss";
 import Post from "./../Post/Post"
 
 export default function Posts() {
-
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(true);
 
@@ -33,6 +34,8 @@ export default function Posts() {
 
     return (
         <div className="posts-wrapper">
+            <h1>qw{userData.username}</h1>
+            <h1>qw{userData.email}</h1>
             {posts.map((post) => {
                return <Post key={post.id} post={post} posts={posts} setPosts={setPosts} />
             })}

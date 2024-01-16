@@ -41,6 +41,7 @@ export default function Login() {
               placeholder="Enter your username"
               aria-describedby="user-username"
               aria-invalid="false"
+              autoComplete="current-username"
               onChange={handleInput}
             />
             <div id="user-username" className="sr-only">
@@ -55,6 +56,7 @@ export default function Login() {
               name="password"
               aria-describedby="user-password"
               aria-invalid="false"
+              autoComplete="current-password"
               onChange={handleInput}
             />
             <div id="user-password" className="sr-only">

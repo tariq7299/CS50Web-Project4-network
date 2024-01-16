@@ -1,25 +1,31 @@
 import "./Navbar.scss";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/AuthProvider";
 
 
 export default function Navbar({handelPostModal}) {
     
     const navigate = useNavigate();
+    const auth = useAuth();
 
     function handleLogout() {
 
-        fetch("/logout", {
-            method: "POST",
-        })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(result => Promise.reject(result.error));
-              }
-              navigate("/login");
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+        // fetch("/logout", {
+        //     method: "POST",
+        // })
+        // .then(response => {
+        //     if (!response.ok) {
+        //         return response.json().then(result => Promise.reject(result.error));
+        //       }
+        //       navigate("/login");
+        // })
+        // .catch((error) => {
+        //     console.error('Error:', error);
+        // });
+        auth.logOut()
+        
+        return
+        
     }
     
 

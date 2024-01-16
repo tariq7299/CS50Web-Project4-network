@@ -12,7 +12,8 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import BasicAuthentication
 
-from django.contrib.auth.decorators import login_required
+from rest_framework.response import Response
+
 
 
 def index(request):
@@ -21,22 +22,22 @@ def index(request):
 @csrf_exempt
 def login_view(request):
     if request.method == "POST":
-        data = json.loads(request.body)
+        user_data = json.loads(request.body)
         
-        print(data)
+        print(user_data)
 
         # Attempt to sign user in
-        username = data["username"]
-        password = data["password"]
+        username = user_data["username"]
+        password = user_data["password"]
         user = authenticate(request, username=username, password=password)
 
         # Check if authentication successful
         if user is not None:
             login(request, user)
             print("request.user", request.user)
-            data = {"username": request.user.username, "email": request.user.email, "firstname": request.user.first_name, "lastname": request.user.last_name}
-            print("data", data)
-            return JsonResponse({"data": data})
+            user_data = {"username": request.user.username, "email": request.user.email, "firstname": request.user.first_name, "lastname": request.user.last_name}
+            print("user_data", user_data)
+            return JsonResponse({"user_data": user_data})
         else:
             return JsonResponse({"message": "Invalid username and/or password"})
     else:
@@ -47,7 +48,7 @@ def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
-
+@csrf_exempt
 def register(request):
     if request.method == "POST":
         data = json.loads(request.body)
@@ -87,11 +88,22 @@ def create_new_post(request):
     except ErrorCreatingPost as error_msg:
         return JsonResponse({"error": str(error_msg)}, status=400)
 
+
 def get_posts(request):
     
     try:
         post_handler = PostHandler(request)
         posts = post_handler.get_posts_for_you()
+        
+        return JsonResponse(posts, safe=False)
+    except NoPostsYet as err_msg:
+        return JsonResponse({"message": err_msg}, safe=False)
+    
+    
+def get_posts_following(request):
+    try:
+        post_handler = PostHandler(request)
+        posts = post_handler.get_posts_following()
         
         return JsonResponse(posts, safe=False)
     except NoPostsYet as err_msg:
@@ -105,8 +117,8 @@ def post(request, user_id, post_id):
 
     if request.method == "PUT":
         # Remove this !!!!!!!
-        logout(request)
-        print(request.user)
+        # logout(request)
+        # print(request.user)
         data = json.loads(request.body)
         
         if data.get("isFollowed") is not None:
@@ -139,10 +151,13 @@ def post(request, user_id, post_id):
 @api_view(['GET'])
 @authentication_classes([BasicAuthentication])
 @permission_classes([IsAuthenticated])
-def get_user_info(request):
+def get_user_info(request, format=None):
     
-    print(request.user)
-    is_authenticated = {"is_authenticated" : True}
-    return JsonResponse(is_authenticated)
+    content = {
+        'user': str(request.user),  # `django.contrib.auth.User` instance.
+        'auth': str(request.auth),  # None
+    }
+    print("content", content)
+    return Response(content)
     
     

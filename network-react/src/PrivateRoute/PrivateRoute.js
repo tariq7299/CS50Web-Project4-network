@@ -4,14 +4,11 @@ import { useAuth } from "../hooks/AuthProvider";
 
 const PrivateRoute = () => {
   const auth = useAuth();
-  auth.CheckIfAuthenticated().then(result => {
-      if (result) {
-        return <Outlet />;
-      } else {
-        return <Navigate to="/login" />;
-      }
-    })
-    return <Outlet />;
+  if (auth.CheckIfAuthenticated()){
+    return <Outlet/>
+  }
+  return <Navigate to="/login" />;
+
   }
 
 

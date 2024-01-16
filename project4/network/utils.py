@@ -69,6 +69,38 @@ class PostHandler():
                 
             likes_count = Like.objects.filter(liked_post_id=post["id"]).count()
             post["likes"] =  likes_count
+            
+        return posts
+            
+    def get_posts_following(self):
+        try:
+            # Get all users that the request.user is following
+            followed_users = Follower.objects.filter(follower=self.user).values_list('followed', flat=True)
+
+            # Get all posts of the users that the request.user is following
+            followed_posts = Post.objects.filter(owner__in=followed_users)
+        except Follower.DoesNotExist:
+            raise NoPostsYet("No posts Yet!!")
+        
+    
+        serializer = PostSerializer(followed_posts, many=True)
+        
+        posts = serializer.data
+        
+        for post in posts:
+            if Follower.objects.filter(followed_id=post["owner"]["id"], follower=self.user).exists():
+                post["isFollowed"] = True
+            else:
+                post["isFollowed"] = False
+                
+        for post in posts:
+            if Like.objects.filter(liked_by=self.user, liked_post_id=post["id"]).exists():
+                post["isLiked"] = True
+            else:
+                post["isLiked"] = False
+                
+            likes_count = Like.objects.filter(liked_post_id=post["id"]).count()
+            post["likes"] =  likes_count
         
          
         return posts
