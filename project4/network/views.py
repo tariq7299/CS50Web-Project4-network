@@ -88,9 +88,11 @@ def create_new_post(request):
     except ErrorCreatingPost as error_msg:
         return JsonResponse({"error": str(error_msg)}, status=400)
 
-# @permission_classes[IsAuthenticated]
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_posts_for_you(request):
-    
+    print('request.user', request.user.username)
     try:
         post_handler = PostHandler(request)
         posts = post_handler.get_posts_for_you()
@@ -98,8 +100,11 @@ def get_posts_for_you(request):
         return JsonResponse(posts, safe=False)
     except NoPostsYet as err_msg:
         return JsonResponse({"message": err_msg}, safe=False)
-    
-    
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_posts_following(request):
     try:
         post_handler = PostHandler(request)
@@ -109,12 +114,11 @@ def get_posts_following(request):
     except NoPostsYet as err_msg:
         return JsonResponse({"message": err_msg}, safe=False)
 
+
+
 @csrf_exempt
 def post(request, user_id, post_id):
-    current_user = get_object_or_404(User, pk=1)
     
-    
-
     if request.method == "PUT":
         # Remove this !!!!!!!
         # logout(request)
@@ -123,24 +127,24 @@ def post(request, user_id, post_id):
         
         if data.get("isFollowed") is not None:
             if data["isFollowed"]:
-                if not Follower.objects.filter(followed_id=user_id, follower=current_user).exists():                
-                    follow = Follower(followed_id=user_id, follower=current_user)
+                if not Follower.objects.filter(followed_id=user_id, follower=request.user).exists():                
+                    follow = Follower(followed_id=user_id, follower=request.user)
                     follow.save()
             else:
-                if Follower.objects.filter(followed_id=user_id, follower=current_user).exists():               
-                    follow = Follower.objects.filter(followed_id=user_id, follower=current_user).first()
+                if Follower.objects.filter(followed_id=user_id, follower=request.user).exists():               
+                    follow = Follower.objects.filter(followed_id=user_id, follower=request.user).first()
                     follow.delete()
 
             return JsonResponse({"message": "Successfully updated follow status."})
         
         if data.get("isLiked") is not None:
             if data["isLiked"]:
-                if not Like.objects.filter(liked_by=current_user, liked_post_id=post_id).exists():                
-                    like = Like(liked_by=current_user, liked_post_id=post_id)
+                if not Like.objects.filter(liked_by=request.user, liked_post_id=post_id).exists():                
+                    like = Like(liked_by=request.user, liked_post_id=post_id)
                     like.save()
             else:
-                if Like.objects.filter(liked_by=current_user, liked_post_id=post_id).exists():               
-                    like = Like.objects.filter(liked_by=current_user, liked_post_id=post_id).first()
+                if Like.objects.filter(liked_by=request.user, liked_post_id=post_id).exists():               
+                    like = Like.objects.filter(liked_by=request.user, liked_post_id=post_id).first()
                     like.delete()
 
             return JsonResponse({"message": "Successfully updated like status."})

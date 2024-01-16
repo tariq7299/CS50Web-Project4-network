@@ -16,7 +16,7 @@ class PostHandler():
     def __init__(self, request):
         self.request = request
         # this should be replaced with request.user
-        self.user = User.objects.get(id=1)
+        # self.request.user = User.objects.get(id=1)
         
     # @property
     # def request(self):
@@ -36,12 +36,12 @@ class PostHandler():
         post = json.loads(self.request.body) 
         serializer = PostSerializer(data=post)
         if serializer.is_valid():
-            serializer.save(owner=self.user)
+            serializer.save(owner=self.request.user)
             return {"message": "Post created successfully!"}
         raise ErrorCreatingPost(serializer.errors)
 
         # post_content = data.get("postContent", "")
-        # post = Post(owner=self.user, content=post_content)
+        # post = Post(owner=self.request.user, content=post_content)
         # post.save()
     
     def get_posts_for_you(self):
@@ -56,13 +56,13 @@ class PostHandler():
         posts = serializer.data
         
         for post in posts:
-            if Follower.objects.filter(followed_id=post["owner"]["id"], follower=self.user).exists():
+            if Follower.objects.filter(followed_id=post["owner"]["id"], follower=self.request.user).exists():
                 post["isFollowed"] = True
             else:
                 post["isFollowed"] = False
                 
         for post in posts:
-            if Like.objects.filter(liked_by=self.user, liked_post_id=post["id"]).exists():
+            if Like.objects.filter(liked_by=self.request.user, liked_post_id=post["id"]).exists():
                 post["isLiked"] = True
             else:
                 post["isLiked"] = False
@@ -75,7 +75,7 @@ class PostHandler():
     def get_posts_following(self):
         try:
             # Get all users that the request.user is following
-            followed_users = Follower.objects.filter(follower=self.user).values_list('followed', flat=True)
+            followed_users = Follower.objects.filter(follower=self.request.user).values_list('followed', flat=True)
 
             # Get all posts of the users that the request.user is following
             followed_posts = Post.objects.filter(owner__in=followed_users)
@@ -88,13 +88,13 @@ class PostHandler():
         posts = serializer.data
         
         for post in posts:
-            if Follower.objects.filter(followed_id=post["owner"]["id"], follower=self.user).exists():
+            if Follower.objects.filter(followed_id=post["owner"]["id"], follower=self.request.user).exists():
                 post["isFollowed"] = True
             else:
                 post["isFollowed"] = False
                 
         for post in posts:
-            if Like.objects.filter(liked_by=self.user, liked_post_id=post["id"]).exists():
+            if Like.objects.filter(liked_by=self.request.user, liked_post_id=post["id"]).exists():
                 post["isLiked"] = True
             else:
                 post["isLiked"] = False

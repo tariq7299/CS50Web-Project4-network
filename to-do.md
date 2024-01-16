@@ -16,6 +16,7 @@
 -   Remove @csrf_token and actually configure csrf tokens in put and post requestsss
 -   Remove Follow button from user own posts in feed
 -   Add register link in logout !
+-   Add no followed posts yet !! in following route if user is not following any body
 
 
 # project4-backend
