@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import './App.scss';
+import './Following.scss';
 import NewPostModal from "../../NewPostModal/NewPostModal";
 import Navbar from "../../Navbar/Navbar";
 import Posts from "../../Posts/Posts";
@@ -9,6 +9,7 @@ import Posts from "../../Posts/Posts";
 
 function Following() {
   const [isActive, setIsActive] = useState(false)
+  
   // const [postContent, setPostContent] = useState("")
   
 
@@ -34,4 +35,4 @@ function Following() {
   );
 }
 
-export default Dashboard;
+export default Following;

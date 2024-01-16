@@ -89,7 +89,7 @@ def create_new_post(request):
         return JsonResponse({"error": str(error_msg)}, status=400)
 
 
-def get_posts(request):
+def get_posts_for_you(request):
     
     try:
         post_handler = PostHandler(request)

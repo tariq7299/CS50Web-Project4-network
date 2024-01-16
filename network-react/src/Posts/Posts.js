@@ -1,18 +1,31 @@
 import {useEffect, useState} from 'react';
 import "./Posts.scss";
 import Post from "./../Post/Post"
+import { useLocation } from 'react-router-dom';
+
 
 export default function Posts() {
     const userData = JSON.parse(localStorage.getItem("userData"));
     
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(true);
+    const location = useLocation()
+
 
     useEffect(() => {
-        fetch("/get-posts")
+        let apiUrl
+
+        if (location.pathname === "/dashboard") {
+            apiUrl = "/get-posts-for-you"
+            console.log(apiUrl)
+        } else {
+            apiUrl = "/get-posts-following"
+        }
+
+        fetch(apiUrl)
             .then((response) => {
                 if (!response.ok) {
-                    return response.json().then((data) => Promise.reject(data.error))
+                return response.json().then((data) => Promise.reject(data.error))
                 }
                 return response.json()
             })
@@ -21,7 +34,7 @@ export default function Posts() {
                 setPosts(posts)
                 setLoading(false);
             })
-    }, [])
+    }, [location])
 
 
     if (loading) {
