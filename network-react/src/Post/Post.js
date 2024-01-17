@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./Post.scss";
 
 export default function Post({post, posts, setPosts}) {
@@ -82,13 +83,17 @@ export default function Post({post, posts, setPosts}) {
     return (
         <div className="post-wrapper">
             <div className="profile-image-wrapper">
-            <img src="default-profile.svg.png" alt="Profile"></img>
+            <Link to="/profile">
+                <img src="default-profile.svg.png" alt="Profile"></img>
+            </Link>
             </div>
     
             <div className="username-post-content-wrapper">
             <div className="userActualName-username-date-wrapper">
-                <p className="userActualName">{post.owner.first_name} {post.owner.last_name}</p>
-                <p className="username">@{post.owner.username}</p>
+                <Link to="/profile">
+                    <p className="userActualName">{post.owner.first_name} {post.owner.last_name}</p>
+                    <p className="username">@{post.owner.username}</p>
+                </Link>
                 <p className="date">{post.date_released}</p>
                 <button onClick={() => handleFollowButton(post.owner.id, post.id, post.isFollowed)}>
                     {post.isFollowed ? 'Unfollow' : 'Follow'}

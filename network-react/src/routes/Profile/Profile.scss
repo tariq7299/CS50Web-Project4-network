@@ -1,0 +1,33 @@
+.parent-container {
+    width: 100%;
+    padding-top: 2rem;
+    padding-left: 7rem;
+
+    .image-container {
+        width: 100%;
+        position: relative;
+        .cover-image{
+            object-fit: cover;
+            width: 100%;
+            z-index: 1;
+        }
+        .profile-image{
+            left: 4%;
+            bottom: 0%;
+            transform: translate(0, 50%);
+            object-fit: cover;
+            width: 20%;
+            position: absolute;
+            z-index: 2;
+        }
+    }
+
+    .lower-user-name {
+        padding-top: 5rem; 
+    }
+   
+    .username {
+        
+    }
+}
+

@@ -1,5 +1,5 @@
 import "./Navbar.scss";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/AuthProvider";
 
 
@@ -9,19 +9,6 @@ export default function Navbar({handelPostModal}) {
     const auth = useAuth();
 
     function handleLogout() {
-
-        // fetch("/logout", {
-        //     method: "POST",
-        // })
-        // .then(response => {
-        //     if (!response.ok) {
-        //         return response.json().then(result => Promise.reject(result.error));
-        //       }
-        //       navigate("/login");
-        // })
-        // .catch((error) => {
-        //     console.error('Error:', error);
-        // });
         auth.logOut()
 
         return
@@ -53,8 +40,8 @@ export default function Navbar({handelPostModal}) {
             </div>
             
             <div className= "top-navbar">
-                <a href="#"> for you</a>
-                <a href="#"> Following</a>
+                <Link to="/dashboard"> for you</Link>
+                <Link to="/following"> Following</Link>
             </div>
         </div>
     )

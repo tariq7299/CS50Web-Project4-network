@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import "./Posts.scss";
 import Post from "./../Post/Post"
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 
 export default function Posts() {
@@ -10,16 +10,27 @@ export default function Posts() {
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(true);
     const location = useLocation()
+    let { username } = useParams();
+    // const match = useRouteMatch("/:username")
+    console.log("username&&&", username)
+    console.log("location&&&", location)
 
 
     useEffect(() => {
         let apiUrl
 
+        // const regex = /^\/\w+$/;
         if (location.pathname === "/dashboard") {
             apiUrl = "/get-posts-for-you"
-        } else {
+        } else if (location.pathname === "/following") {
             apiUrl = "/get-posts-following"
-        }
+        } else if (username) {
+            apiUrl = `/get-posts-for-user-profile/${username}`
+            console.log("apiUrl", apiUrl)
+        } 
+        //  else if (regex.test(location.pathname)) {
+        //     apiUrl = "/get-posts-for-user-profile"
+        // }
 
         fetch(apiUrl,
             { method: 'GET',
@@ -47,8 +58,8 @@ export default function Posts() {
 
     return (
         <div className="posts-wrapper">
-            <h1>qw{userData.username}</h1>
-            <h1>qw{userData.email}</h1>
+            <p>qw{userData.username}</p>
+            <p>qw{userData.email}</p>
             {posts.map((post) => {
                return <Post key={post.id} post={post} posts={posts} setPosts={setPosts} />
             })}

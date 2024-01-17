@@ -115,6 +115,19 @@ def get_posts_following(request):
         return JsonResponse(posts, safe=False)
     except NoPostsYet as err_msg:
         return JsonResponse({"message": err_msg}, safe=False)
+    
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_posts_for_user_profile(request, username):
+    try:
+        post_handler = PostHandler(request)
+        posts = post_handler.get_posts_for_user_profile(username)
+        
+        # print("posts", posts)
+        return JsonResponse(posts, safe=False)
+    except NoPostsYet as err_msg:
+        return JsonResponse({"message": err_msg}, safe=False)
 
 
 # THis required in BASIC AUTHENTICATION

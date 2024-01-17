@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../../hooks/AuthProvider";
+import { Link } from "react-router-dom";
 
 import "./Login.scss";
 
@@ -31,6 +32,7 @@ export default function Login() {
       };
     
       return (
+        <>
         <form onSubmit={handleSubmitEvent}>
           <div className="form_control">
             <label htmlFor="user-username">Username:</label>
@@ -65,5 +67,7 @@ export default function Login() {
           </div>
           <button className="btn-submit">Submit</button>
         </form>
+        <Link to="/register">Register here</Link>
+        </>
       );
     };

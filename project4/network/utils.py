@@ -9,6 +9,8 @@ class InvalidMethodError(Exception):
     pass
 class NoPostsYet(Exception):
     pass
+class NoUserWithThatUsername(Exception):
+    pass
 class ErrorCreatingPost(Exception):
     pass
 
@@ -103,6 +105,42 @@ class PostHandler():
             post["likes"] =  likes_count
         
          
+        return posts
+    
+    def get_posts_for_user_profile(self, username):
+        # Remove this 
+        # self.request.user = User.objects.get(username="teka")
+        try:
+            requested_user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise NoUserWithThatUsername("Wrong username!!")
+        try:
+            # print("requested_user", requested_user)
+            posts_query_set = Post.objects.filter(owner=requested_user).order_by('-date_released')
+        except Post.DoesNotExist:
+            raise NoPostsYet("No posts Yet!!")
+        
+    
+        serializer = PostSerializer(posts_query_set, many=True)
+        
+        posts = serializer.data
+        # print("posts", posts)
+        for post in posts:
+            # print('post["owner"]', post["owner"])
+            if Follower.objects.filter(followed_id=post["owner"]["id"], follower=self.request.user).exists():
+                post["isFollowed"] = True
+            else:
+                post["isFollowed"] = False
+                
+        for post in posts:
+            if Like.objects.filter(liked_by=self.request.user, liked_post_id=post["id"]).exists():
+                post["isLiked"] = True
+            else:
+                post["isLiked"] = False
+                
+            likes_count = Like.objects.filter(liked_post_id=post["id"]).count()
+            post["likes"] =  likes_count
+            
         return posts
     
     
