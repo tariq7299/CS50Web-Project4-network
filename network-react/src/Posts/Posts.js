@@ -6,15 +6,10 @@ import { useLocation, useParams } from 'react-router-dom';
 
 export default function Posts() {
     const userData = JSON.parse(localStorage.getItem("userData"));
-    
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(true);
     const location = useLocation()
     let { username } = useParams();
-    // const match = useRouteMatch("/:username")
-    console.log("username&&&", username)
-    console.log("location&&&", location)
-
 
     useEffect(() => {
         let apiUrl
@@ -26,8 +21,8 @@ export default function Posts() {
             apiUrl = "/get-posts-following"
         } else if (username) {
             apiUrl = `/get-posts-for-user-profile/${username}`
-            console.log("apiUrl", apiUrl)
         } 
+        // You can use reguler expression instead of useParams()
         //  else if (regex.test(location.pathname)) {
         //     apiUrl = "/get-posts-for-user-profile"
         // }

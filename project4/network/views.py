@@ -36,7 +36,8 @@ def login_view(request):
         if user is not None:
             login(request, user)
             print("request.user", request.user)
-            user_data = {"username": request.user.username, "email": request.user.email, "firstname": request.user.first_name, "lastname": request.user.last_name}
+            user_data = UserSerializer(request.user).data
+            # user_data = {"username": request.user.username, "email": request.user.email, "firstname": request.user.first_name, "lastname": request.user.last_name}
             print("user_data", user_data)
             return JsonResponse({"user_data": user_data})
         else:
@@ -136,22 +137,22 @@ def get_posts_for_user_profile(request, username):
 @csrf_exempt
 def post(request, user_id, post_id):
     if request.method == "PUT":
-        # Remove this !!!!!!!
-        # logout(request)
-        # print(request.user)
         data = json.loads(request.body)
         
-        if data.get("isFollowed") is not None:
-            if data["isFollowed"]:
-                if not Follower.objects.filter(followed_id=user_id, follower=request.user).exists():                
-                    follow = Follower(followed_id=user_id, follower=request.user)
-                    follow.save()
-            else:
-                if Follower.objects.filter(followed_id=user_id, follower=request.user).exists():               
-                    follow = Follower.objects.filter(followed_id=user_id, follower=request.user).first()
-                    follow.delete()
+        
+        # This was a removed feature in my app, that was a follow button in every post, then i removed this feature
+        
+        # if data.get("isFollowed") is not None:
+        #     if data["isFollowed"]:
+        #         if not Follower.objects.filter(followed_id=user_id, follower=request.user).exists():                
+        #             follow = Follower(followed_id=user_id, follower=request.user)
+        #             follow.save()
+        #     else:
+        #         if Follower.objects.filter(followed_id=user_id, follower=request.user).exists():               
+        #             follow = Follower.objects.filter(followed_id=user_id, follower=request.user).first()
+        #             follow.delete()
 
-            return JsonResponse({"message": "Successfully updated follow status."})
+        #     return JsonResponse({"message": "Successfully updated follow status."})
         
         if data.get("isLiked") is not None:
             if data["isLiked"]:
@@ -167,17 +168,43 @@ def post(request, user_id, post_id):
     return JsonResponse({"error": "Invalid request method."}, status=400)
 
 
-
-@api_view(['GET'])
-@authentication_classes([BasicAuthentication])
+# THis required in BASIC AUTHENTICATION
+@api_view(['PUT'])
 @permission_classes([IsAuthenticated])
-def get_user_info(request, format=None):
+@csrf_exempt
+def follow(request, user_id):
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        
+        
+        # This was a removed feature in my app, that was a follow button in every post, then i removed this feature
+        
+        if data.get("isFollowed") is not None:
+            if data["isFollowed"]:
+                if not Follower.objects.filter(followed_id=user_id, follower=request.user).exists():                
+                    follow = Follower(followed_id=user_id, follower=request.user)
+                    follow.save()
+            else:
+                if Follower.objects.filter(followed_id=user_id, follower=request.user).exists():               
+                    follow = Follower.objects.filter(followed_id=user_id, follower=request.user).first()
+                    follow.delete()
+
+            return JsonResponse({"message": "Successfully updated follow status."})
+        
+       
+    return JsonResponse({"error": "Invalid request method."}, status=400)
+
+
+# @api_view(['GET'])
+# @authentication_classes([BasicAuthentication])
+# @permission_classes([IsAuthenticated])
+# def get_user_info(request, format=None):
     
-    content = {
-        'user': str(request.user),  # `django.contrib.auth.User` instance.
-        'auth': str(request.auth),  # None
-    }
-    print("content", content)
-    return Response(content)
+#     content = {
+#         'user': str(request.user),  # `django.contrib.auth.User` instance.
+#         'auth': str(request.auth),  # None
+#     }
+#     print("content", content)
+#     return Response(content)
     
     

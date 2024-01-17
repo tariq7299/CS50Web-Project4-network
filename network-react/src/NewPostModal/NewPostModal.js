@@ -46,7 +46,7 @@ return (
 
             <div className="profile-image-input-wrapper">
             <div className="profile-image-wrapper">
-                <img src="default-profile.svg.png"></img>
+                <img src="/default-profile.svg.png"></img>
             </div>
             <textarea name="post-content-input" className="post-content" placeholder="What's happening?" value={postContent} onChange={handlePostContentInput}></textarea>
             </div>

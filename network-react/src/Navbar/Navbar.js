@@ -30,7 +30,7 @@ export default function Navbar({handelPostModal}) {
 
                 <div className="user-info-wrapper">
                     <div className="profile-image-wrapper">
-                        <img className="profile-image" src="default-profile.svg.png" alt="user-profile-image"></img>
+                        <img className="profile-image" src="/default-profile.svg.png" alt="user-profile-image"></img>
                     </div>
                     <div className="username-wrapper">              
                         <p className="user-actual-name">{userData.firstname}{' '}{userData.lastname}</p>

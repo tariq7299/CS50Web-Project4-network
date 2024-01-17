@@ -46,8 +46,9 @@ function AuthProvider ({ children }) {
       });
       const res = await response.json();
       if (res.user_data) {
-        userData["firsname"] = res.user_data.firstname
-        userData["lastname"] = res.user_data.lastname
+        userData["id"] = res.user_data.id
+        userData["firsname"] = res.user_data.first_name
+        userData["lastname"] = res.user_data.last_name
         userData["email"] = res.user_data.email
         localStorage.setItem("userData", JSON.stringify(userData));
         navigate("/dashboard");
@@ -82,8 +83,6 @@ function AuthProvider ({ children }) {
       console.error(err);
     }
   };
-
-
 
   const logOut = () => {
     localStorage.removeItem("userData")

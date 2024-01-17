@@ -57,11 +57,12 @@ class PostHandler():
         
         posts = serializer.data
         
-        for post in posts:
-            if Follower.objects.filter(followed_id=post["owner"]["id"], follower=self.request.user).exists():
-                post["isFollowed"] = True
-            else:
-                post["isFollowed"] = False
+        # This was a logic related to a removed feature in my app (a follow button in every post)
+        # for post in posts:
+        #     if Follower.objects.filter(followed_id=post["owner"]["id"], follower=self.request.user).exists():
+        #         post["isFollowed"] = True
+        #     else:
+        #         post["isFollowed"] = False
                 
         for post in posts:
             if Like.objects.filter(liked_by=self.request.user, liked_post_id=post["id"]).exists():
@@ -89,11 +90,12 @@ class PostHandler():
         
         posts = serializer.data
         
-        for post in posts:
-            if Follower.objects.filter(followed_id=post["owner"]["id"], follower=self.request.user).exists():
-                post["isFollowed"] = True
-            else:
-                post["isFollowed"] = False
+        # This was a logic related to a removed feature in my app (a follow button in every post)
+        # for post in posts:
+        #     if Follower.objects.filter(followed_id=post["owner"]["id"], follower=self.request.user).exists():
+        #         post["isFollowed"] = True
+        #     else:
+        #         post["isFollowed"] = False
                 
         for post in posts:
             if Like.objects.filter(liked_by=self.request.user, liked_post_id=post["id"]).exists():
@@ -124,13 +126,13 @@ class PostHandler():
         serializer = PostSerializer(posts_query_set, many=True)
         
         posts = serializer.data
-        # print("posts", posts)
-        for post in posts:
-            # print('post["owner"]', post["owner"])
-            if Follower.objects.filter(followed_id=post["owner"]["id"], follower=self.request.user).exists():
-                post["isFollowed"] = True
-            else:
-                post["isFollowed"] = False
+        
+        # This was a logic related to a removed feature in my app (a follow button in every post)
+        # for post in posts:
+        #     if Follower.objects.filter(followed_id=post["owner"]["id"], follower=self.request.user).exists():
+        #         post["isFollowed"] = True
+        #     else:
+        #         post["isFollowed"] = False
                 
         for post in posts:
             if Like.objects.filter(liked_by=self.request.user, liked_post_id=post["id"]).exists():
