@@ -6,12 +6,12 @@ function Dashboard() {
   return (
     
     
-      <div className="parent-container" >
+      // <div className="parent-container" >
+        <>
+          <Posts></Posts>
+        </>
 
-        <Posts></Posts>
 
-
-        </div>
     
   );
 }

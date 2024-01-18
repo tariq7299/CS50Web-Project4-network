@@ -2,11 +2,15 @@
 
 
 .posts-wrapper {
-
-    width: 100%;
+    position: absolute;
+    // right: 0;
+    // width: 80%;
     height: 100%;
-    padding-top: 6rem;
-    padding-left: 11rem;
+    width: max(60%, 800px);
+     left: 70%;
+     transform: translate(-50%, 0%);
+    // padding-top: 6rem;
+    // padding-left: 11rem;
   
     // .post-wrapper{
     //   position: relative;
