@@ -12,5 +12,10 @@
  }
 
  .parent-container {
+    position: relative;
+    width: max(60%, 800px);
+    left: 50%;
+    transform: translate(-50%, 0%);
+    // top: 400px;
     font-family: 'Noto Sans', sans-serif;
  }

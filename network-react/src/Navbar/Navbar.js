@@ -18,7 +18,9 @@ export default function Navbar({handelPostModal}) {
     const userData = JSON.parse(localStorage.getItem("userData"))
 
     return (
-        <div className="navbar">
+        // <div className="navbar">
+        <>
+        
             <div className="side-navbar">
 
                 <div className="nav-buttons-and-post-button-wrapper">
@@ -43,7 +45,7 @@ export default function Navbar({handelPostModal}) {
                 <Link to="/dashboard"> for you</Link>
                 <Link to="/following"> Following</Link>
             </div>
-        </div>
+            </>
     )
 
 }
