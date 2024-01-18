@@ -18,9 +18,10 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route element={<PrivateRoute />}>
               <Route path="/" element={<Root />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/following" element={<Following />} />
-              <Route path="/profile/:username" element={<Profile />} />
+                <Route index element={<Dashboard />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/following" element={<Following />} />
+                <Route path="/profile/:username" element={<Profile />} />
               </Route>
             </Route>
             {/* Other routes */}

@@ -1,0 +1,16 @@
+
+ html,
+ body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+
+    background-color: var(--primary-color);
+    color: var(--font-color);
+ }
+
+ .parent-container {
+    font-family: 'Noto Sans', sans-serif;
+ }

@@ -17,6 +17,7 @@
 -   Remove Follow button from user own posts in feed
 -   Add register link in logout !
 -   Add no followed posts yet !! in following route if user is not following any body
+-   Add link to current user name and profile image that will direct current user to his own page
 
 
 # project4-backend

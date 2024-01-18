@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
@@ -10,10 +10,7 @@ from .utils import PostHandler, InvalidMethodError, NoPostsYet, ErrorCreatingPos
 from .serializers import PostSerializer, UserSerializer
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import BasicAuthentication
-
-from rest_framework.response import Response
-
+from django.core.paginator import Paginator
 
 
 def index(request):
@@ -96,12 +93,12 @@ def create_new_post(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_posts_for_you(request):
-    print('request.user', request.user.username)
+    page_number = request.GET.get('pageNumber')
     try:
         post_handler = PostHandler(request)
-        posts = post_handler.get_posts_for_you()
+        page = post_handler.get_posts_for_you(page_number)
         
-        return JsonResponse(posts, safe=False)
+        return JsonResponse(page, safe=False)
     except NoPostsYet as err_msg:
         return JsonResponse({"message": err_msg}, safe=False)
 
@@ -109,11 +106,12 @@ def get_posts_for_you(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_posts_following(request):
+    page_number = request.GET.get('pageNumber')
     try:
         post_handler = PostHandler(request)
-        posts = post_handler.get_posts_following()
+        page = post_handler.get_posts_following(page_number)
         
-        return JsonResponse(posts, safe=False)
+        return JsonResponse(page, safe=False)
     except NoPostsYet as err_msg:
         return JsonResponse({"message": err_msg}, safe=False)
     
@@ -121,14 +119,16 @@ def get_posts_following(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_posts_for_user_profile(request, username):
+    page_number = request.GET.get('pageNumber')
     try:
         post_handler = PostHandler(request)
-        posts = post_handler.get_posts_for_user_profile(username)
+        page = post_handler.get_posts_for_user_profile(username, page_number)
         
         # print("posts", posts)
-        return JsonResponse(posts, safe=False)
+        return JsonResponse(page, safe=False)
     except NoPostsYet as err_msg:
         return JsonResponse({"message": err_msg}, safe=False)
+
 
 
 # THis required in BASIC AUTHENTICATION
@@ -154,6 +154,27 @@ def post(request, user_id, post_id):
 
         #     return JsonResponse({"message": "Successfully updated follow status."})
         
+        if data.get("postContent") is not None:
+            try:
+                post = Post.objects.filter(pk=post_id)
+            except Post.DoesNotExist:
+                return JsonResponse({"error": "Post doesn't exist."}, status=400)
+            
+            post = PostSerializer(post, many=True).data[0]
+            
+            post_owner = post["owner"]["username"]
+                
+            if request.user.username != post_owner:
+                return JsonResponse({"error": "Can't edit this post, owner only can edit !."}, status=400)
+            
+            if data["postContent"]:
+                    
+                post.update(content=data["postContent"])
+            else:
+                    return JsonResponse({"error": "Please provide content."}, status=400)
+
+            return JsonResponse({"message": "Successfully updated follow status."})
+        
         if data.get("isLiked") is not None:
             if data["isLiked"]:
                 if not Like.objects.filter(liked_by=request.user, liked_post_id=post_id).exists():                
@@ -169,10 +190,16 @@ def post(request, user_id, post_id):
 
 
 # THis required in BASIC AUTHENTICATION
-@api_view(['PUT'])
+@api_view(['PUT', 'GET'])
 @permission_classes([IsAuthenticated])
 @csrf_exempt
-def follow(request, user_id):
+def follow(request, username):
+    print("username", username)
+    try:
+        requested_user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return JsonResponse({"error": "Invalid user"}, status=400)
+        
     if request.method == "PUT":
         data = json.loads(request.body)
         
@@ -181,20 +208,32 @@ def follow(request, user_id):
         
         if data.get("isFollowed") is not None:
             if data["isFollowed"]:
-                if not Follower.objects.filter(followed_id=user_id, follower=request.user).exists():                
-                    follow = Follower(followed_id=user_id, follower=request.user)
+                if not Follower.objects.filter(followed=requested_user, follower=request.user).exists():                
+                    follow = Follower(followed=requested_user, follower=request.user)
                     follow.save()
             else:
-                if Follower.objects.filter(followed_id=user_id, follower=request.user).exists():               
-                    follow = Follower.objects.filter(followed_id=user_id, follower=request.user).first()
+                if Follower.objects.filter(followed=requested_user, follower=request.user).exists():               
+                    follow = Follower.objects.filter(followed=requested_user, follower=request.user).first()
                     follow.delete()
 
             return JsonResponse({"message": "Successfully updated follow status."})
+    else:
+        if Follower.objects.filter(followed=requested_user, follower=request.user).exists():
+            follow_status = {"isFollowed" : True}
+        else:
+            follow_status = {"isFollowed" : False}
         
+        return JsonResponse(follow_status)
        
     return JsonResponse({"error": "Invalid request method."}, status=400)
 
-
+def pagination(request):
+    posts = Post.objects.all()
+    paginator = Paginator(posts, 25)
+    # print("paginator", paginator.object_list)
+    # print("paginator", paginator.object_list.values())
+    return JsonResponse("YES", safe=False)
+    
 # @api_view(['GET'])
 # @authentication_classes([BasicAuthentication])
 # @permission_classes([IsAuthenticated])
@@ -206,5 +245,4 @@ def follow(request, user_id):
 #     }
 #     print("content", content)
 #     return Response(content)
-    
     

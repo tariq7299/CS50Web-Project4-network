@@ -13,5 +13,6 @@ urlpatterns = [
     path("get-posts-following", views.get_posts_following, name="get_posts_following"),
     path("get-posts-for-user-profile/<str:username>", views.get_posts_for_user_profile, name="get_posts_for_user_profile"),
     path("post/<int:user_id>/<int:post_id>", views.post, name="post"),
-    path("follow/<int:user_id>", views.follow, name="follow"),
+    path("follow/<str:username>", views.follow, name="follow"),
+    path("pagination", views.pagination, name="pagination"),
 ]

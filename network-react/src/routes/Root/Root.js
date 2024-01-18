@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import NewPostModal from "../../NewPostModal/NewPostModal";
 import Navbar from "../../Navbar/Navbar";
-import Posts from "../../Posts/Posts";
+import "./Root.scss";
 import { Navigate, Outlet } from "react-router-dom";
 
 // import AuthProvider from "./../hooks/AuthProvider";
@@ -22,9 +22,9 @@ function Root() {
     
       <div className="parent-container" >
 
-        <NewPostModal handelPostModal={handelPostModal} isActive={isActive}></NewPostModal>
-
         <Navbar handelPostModal={handelPostModal}></Navbar>
+
+        <NewPostModal handelPostModal={handelPostModal} isActive={isActive}></NewPostModal>
 
         <Outlet />
 

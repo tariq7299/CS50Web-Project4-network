@@ -1,21 +1,36 @@
 import "./Profile.scss";
 import Posts from "../../Posts/Posts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 
 export default function Profile(){
 
-    const [isFollowed, setIsFollowed] = useState();
+    const [isFollowed, setIsFollowed] = useState(null);
     const userData = JSON.parse(localStorage.getItem("userData"));
     let { username } = useParams();
 
+    useEffect(() => {
+        fetch(`/follow/${username}`,
+            { method: 'GET',
+            headers: { 'Authorization': 'Basic ' + btoa(`${userData.username}:${userData.password}`) }})
+            .then((response) => {
+                if (!response.ok) {
+                return response.json().then((data) => Promise.reject(data.error))
+                }
+                return response.json()
+            })
+            .then((followStatus) => {
+                console.log("followStatus", followStatus)
+                setIsFollowed(followStatus.isFollowed);
+            })
+    })
     // Here I do two things:
     //  first I change the posts variable that is in react state (I could instead refetch posts data from the server again, but instead I just changed the posts value i have here)
     // Second I send a put request to change isFollowed for the post owner
     function handleFollowButton() {
         
         // Send a put request to server "localhost:8000/<userId>"
-        fetch(`/follow/${userData.id}`, {
+        fetch(`/follow/${username}`, {
             method: "PUT",
             headers: {
                 'Content-Type': 'application/json',
@@ -50,8 +65,7 @@ return (
         <p className="lower-user-name">userFirstname userLastname</p>
         <p className="username">username</p>
         {userData.username !== username && 
-        <button onClick={() => handleFollowButton()}>{isFollowed ? 'Unfollow' : 'Follow'}</button>
-        }
+        <button onClick={() => handleFollowButton()}>{isFollowed ? 'Unfollow' : 'Follow'}</button>}
         <p className="following">Number of following</p>
         <p className="followers">Number of followers</p>
 
