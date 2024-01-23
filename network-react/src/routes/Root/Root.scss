@@ -12,6 +12,7 @@
  }
 
  body {
+   // height: 100%;
      //  width: max(60%, 800px);
      //  left: 50%;
      //  transform: translate(-50%, 0%);
@@ -20,8 +21,16 @@
     
     .parent-container {
     //  position: relative;
-    height: 100%;
-    width: 100%;
+    
+    display: flex;
+      max-width: 1300px;
+      // justify-content: center;
+      // align-items: center;
+     margin-left: auto;
+     margin-right: auto;
+     padding: 0 10px;
+      height: 100%;
+   //  width: 100%;
     // margin-inline: auto;
     // top: 400px;
     font-family: 'Noto Sans', sans-serif;
