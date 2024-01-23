@@ -61,9 +61,6 @@ export default function Posts() {
 
     return (
         <div className="posts-wrapper">
-            
-            <p>qw{userData.username}</p>
-            <p>qw{userData.email}</p>
             {page.posts.map((post) => {
                return <Post key={post.id} post={post} page={page} setPage={setPage} />
             })}

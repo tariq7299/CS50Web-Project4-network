@@ -2,22 +2,9 @@
 
 
 .posts-wrapper {
-  
-  // overflow-y: scroll;
-  // width: 80%;
-    // flex: 3 ;
-    // position: absolute;
-    // left: 20%;
-    // border-right-style: solid;
-    // border-left: 1px solid var(--border-color);
-    // width: 80%;
-    // height: 100%;
-    // width: max(80%, 900px);
-    
-    //  left: 70%;
-    //  transform: translate(-50%, 0%);
-    // padding-top: 6rem;
-    // padding-left: 11rem;
+  // height: 100%;
+  z-index: 3;
+  border-left: 1px solid var(--border-color);
   
     // .post-wrapper{
     //   position: relative;
