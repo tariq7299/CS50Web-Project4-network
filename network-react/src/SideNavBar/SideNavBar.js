@@ -1,11 +1,11 @@
-import "./Navbar.scss";
+import "./SideNavBar.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/AuthProvider";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faUsers, faRightFromBracket} from '@fortawesome/free-solid-svg-icons';
 import { faMortarPestle } from '@fortawesome/free-solid-svg-icons';
 
-export default function Navbar({handelPostModal}) {
+export default function SideNavBar({handelPostModal}) {
     
     const navigate = useNavigate();
     const auth = useAuth();
@@ -20,7 +20,7 @@ export default function Navbar({handelPostModal}) {
     const userData = JSON.parse(localStorage.getItem("userData"))
 
     return (
-        <div className="navbar">
+        <div className="side-navbar-wrapper">
             <div className="side-navbar">
 
                 <div className="nav-buttons-and-post-button-wrapper">
@@ -44,10 +44,7 @@ export default function Navbar({handelPostModal}) {
                 </div>
             </div>
             
-            {/* <div className= "top-navbar">
-                <Link to="/dashboard"> for you</Link>
-                <Link to="/following"> Following</Link>
-            </div> */}
+          
         </div>
     )
 

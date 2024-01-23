@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import NewPostModal from "../../NewPostModal/NewPostModal";
-import Navbar from "../../Navbar/Navbar";
+import SideNavBar from "../../SideNavBar/SideNavBar";
+import TopNavBar from '../../TopNavBar/TopNavBar';
 import "./Root.scss";
 import { Navigate, Outlet } from "react-router-dom";
 
@@ -21,8 +22,9 @@ function Root() {
     
     
       <div className="parent-container" >
-
-        <Navbar handelPostModal={handelPostModal}></Navbar>
+        
+        
+        <SideNavBar handelPostModal={handelPostModal}></SideNavBar>
 
         <NewPostModal handelPostModal={handelPostModal} isActive={isActive}></NewPostModal>
 

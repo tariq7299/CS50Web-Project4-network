@@ -1,5 +1,6 @@
 import Posts from "../../Posts/Posts";
-
+import TopNavBar from "../../TopNavBar/TopNavBar";
+import "./Dashboard.scss"
 
 function Dashboard() {
 
@@ -7,9 +8,13 @@ function Dashboard() {
     
     
       // <div className="parent-container" >
-        <>
+      <>
+        <div className="dashboard-container">
+          <TopNavBar></TopNavBar>
+
           <Posts></Posts>
-        </>
+        </div>
+      </>
 
 
     

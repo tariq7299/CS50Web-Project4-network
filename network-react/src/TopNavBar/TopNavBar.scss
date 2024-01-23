@@ -1,0 +1,40 @@
+
+.top-navbar-wrapper {
+    position: sticky;
+    top: 0;
+    backdrop-filter: blur(10px); /* Blur effect */
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent white background */
+    z-index: 3;
+}
+
+.top-navbar {
+    height: 5rem;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    z-index: 1;
+    border-bottom: 1px solid var(--border-color);
+    
+  }
+
+@media (max-width: 500px) {
+    .top-navbar-wrapper {
+    //   width: 100%;
+    //   border: none;
+    }
+  }
+  
+  /* From 500px to 1280px */
+  @media (min-width: 501px) and (max-width: 1280px) {
+    .top-navbar-wrapper {
+    //   width: 100%;
+    }
+  }
+  @media (min-width: 1281px) {
+    .top-navbar-wrapper {
+    //   width: 100%;
+    //   max-width: 800px;
+    }
+  }

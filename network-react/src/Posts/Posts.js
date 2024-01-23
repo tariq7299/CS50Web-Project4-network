@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import "./Posts.scss";
 import Post from "./../Post/Post"
 import { useLocation, useParams } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 
 
 export default function Posts() {
@@ -61,6 +62,7 @@ export default function Posts() {
 
     return (
         <div className="posts-wrapper">
+
             {page.posts.map((post) => {
                return <Post key={post.id} post={post} page={page} setPage={setPage} />
             })}

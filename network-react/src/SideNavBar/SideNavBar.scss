@@ -1,29 +1,15 @@
-.navbar {
+.side-navbar-wrapper {
     height: 100svh;
-    border-right: 1px solid var(--border-color);
+    // border-right: 1px solid var(--border-color);
     padding: 0;
 }
 
 
-.top-navbar {
-    position: fixed;
-    // top: 0px;
-    // right: 0px;
-    width: 80%;
-    height: 5rem;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    z-index: 1;
-    border-bottom: solid;
 
-  }
   
   
   .side-navbar {
-    // width: 20vw;
+    width: 20vw;
     position: fixed;
     height: 100%;
     z-index: 2;
@@ -70,14 +56,14 @@
 
   
   @media (max-width: 500px) {
-    .navbar {
+    .side-navbar-wrapper {
       display: none;
     }
   }
   
   /* From 500px to 1280px */
   @media (min-width: 501px) and (max-width: 1280px) {
-    .navbar{
+    .side-navbar-wrapper{
       min-width: 80px;
       padding: 0;
     }
@@ -93,7 +79,7 @@
     }
   }
   @media (min-width: 1281px) {
-    .navbar{
+    .side-navbar-wrapper{
       // width: 10vw;
       // max-width: 200px;
       min-width: 200px;
