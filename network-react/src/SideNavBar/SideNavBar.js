@@ -24,9 +24,12 @@ export default function SideNavBar({handelPostModal}) {
             <div className="side-navbar">
 
                 <div className="nav-buttons-and-post-button-wrapper">
-                    <a className="navlink" href="#"><FontAwesomeIcon icon={faUsers} size="2xl" /><span className="navlink-text">Network Project</span> </a>
+                    <Link to="/dashboard" className="navlink" href="#"><FontAwesomeIcon icon={faUsers} size="2xl" /><span className="navlink-text">Network Project</span> </Link>
+
                     <a className="navlink" href="#" ><FontAwesomeIcon icon={faHouse} size="2xl"/> <span className="navlink-text">Home</span></a>
+                    
                     <a className="navlink" onClick={handleLogout} ><FontAwesomeIcon icon={faRightFromBracket} size="2xl"/><span className="navlink-text">Logout</span></a>
+
                     <button className="navlink new-post-button" onClick={handelPostModal}><FontAwesomeIcon icon={faMortarPestle} size="2xl"/> <span className="navlink-text">Post</span></button>
                     
 
