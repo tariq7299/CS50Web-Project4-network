@@ -66,8 +66,10 @@ export default function Profile(){
     
 return (
     <div className="profile-container">
+        
+        <div className="user-status-wrapper">
         <p className="upper-user-name">{userData.firstname} {userData.lastname}</p>
-        <p>{userStatus.posts_count} posts</p>
+        <p className="posts-count">{userStatus.posts_count} posts</p>
 
         <div className="image-container">
             <img className="cover-image" src="/wideProfileImage.jpg" ></img>
@@ -78,9 +80,13 @@ return (
         <p className="username">@{userData.username}</p>
 
         {userData.username !== username && 
-        <button onClick={() => handleFollowButton()}>{userStatus.isFollowed ? 'Unfollow' : 'Follow'}</button>}
-        <p className="followers">{userStatus.following_count} Following</p>
-        <p className="following">{userStatus.followers_count} Followers</p>
+        <button className="follow-button" onClick={() => handleFollowButton()}>{userStatus.isFollowed ? 'Unfollow' : 'Follow'}</button>}
+
+        <div className="follow-count-wrapper">
+            <p className="followers">{userStatus.following_count} Following</p>
+            <p className="following">{userStatus.followers_count} Followers</p>
+        </div>
+        </div>
 
         <Posts></Posts>
         

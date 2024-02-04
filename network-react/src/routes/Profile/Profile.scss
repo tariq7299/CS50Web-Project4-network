@@ -2,8 +2,13 @@
     // width: 100%;
     // padding-top: 2rem;
     // padding-left: 7rem;
+    padding-top: 1rem;
     position: relative;
-
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    .user-status-wrapper {
+        border-bottom: 1px solid var(--border-color);
+    }
     .image-container {
         width: 100%;
         position: relative;
@@ -22,9 +27,68 @@
             z-index: 2;
         }
     }
+
+    .upper-user-name {
+        padding-left: 1rem;
+        font-weight: bold;
+        font-size: 1.4rem;
+        margin: 0;
+    }
+    
     .lower-user-name {
+        padding-left: 1rem;
+        font-weight: bold;
+        font-size: 1.4rem;
+        margin: 0;
         padding-top: 5rem; 
     }
-   
+
+    @media screen and (min-width: 1000px) {
+        .lower-user-name {
+            padding-top: 8rem;
+        }
+    }
+
+   .posts-count {
+    color: var(--border-color);
+    padding-left: 1rem;
+    margin: 0;
+    margin-bottom: 1rem;
+   }
+
+   .lower-user-name {
+    position: relative;
+   }
+
+   .username {
+    color: var(--border-color);
+    padding-left: 1rem;
+    margin: 0;
+    margin-bottom: 1rem;
+   }
+
+   .follow-button {
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    color: var(--secondary-color); 
+    font-size: 1.2rem; 
+    padding-left: 1rem;
+   }
+
+   .follow-count-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    width: 220px;
+    justify-content: space-between;
+    // min-width: 200px;
+    // max-width: 400px;
+   }
+
 }
 
