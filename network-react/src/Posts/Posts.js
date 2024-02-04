@@ -68,9 +68,9 @@ export default function Posts() {
             })}
             <div className="page-control-buttons-wrapper">
 
-                {page.page_has_previous && <button onClick={() => setPageNumber(pageNumber - 1)}>previous</button>}
+                {page.page_has_previous && <button onClick={() => setPageNumber(pageNumber - 1)}>Previous</button>}
 
-                {page.page_has_next && <button onClick={() => setPageNumber(pageNumber + 1)}>next</button>}
+                {page.page_has_next && <button onClick={() => setPageNumber(pageNumber + 1)}>More posts</button>}
             </div>
         </div>
     );

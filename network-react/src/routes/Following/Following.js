@@ -1,6 +1,6 @@
 import './Following.scss';
 import Posts from "../../Posts/Posts";
-
+import TopNavBar from '../../TopNavBar/TopNavBar';
 
 function Following() {
   
@@ -9,7 +9,7 @@ function Following() {
     
     
       <div className="parent-container" >
-
+        <TopNavBar></TopNavBar>
 
         <Posts></Posts>
 
