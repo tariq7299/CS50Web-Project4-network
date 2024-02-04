@@ -62,7 +62,9 @@
       color: var(--secondary-color); 
       margin-left: 0.5rem;
       font-size: 1.2rem; 
-      
+      &:hover{
+        color: var(--font-color)
+      }
     }
 
     .like-button{

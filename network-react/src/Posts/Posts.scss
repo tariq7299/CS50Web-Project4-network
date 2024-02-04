@@ -1,12 +1,9 @@
 
 
 
-// .posts-wrapper {
-//   // height: 100%;
-//   position: relative;
-//   z-index: 3;
-//   border-left: 1px solid var(--border-color);
-  
+.posts-wrapper {
+//   height: 100%;
+}
   
 //   .top-navbar-wrapper {
 //     position: fixed;
@@ -34,3 +31,7 @@
 //       max-width: 800px;
 //     }
 //   }
+
+.page-control-buttons-wrapper {
+    position: relative;
+}

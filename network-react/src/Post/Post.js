@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import "./Post.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare, faXmark, faFloppyDisk, faHeart} from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faXmark, faFloppyDisk} from '@fortawesome/free-solid-svg-icons';
+import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
+import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
 
 export default function Post({post, page, setPage}) {
 
@@ -185,7 +187,7 @@ export default function Post({post, page, setPage}) {
             </div>
     
             <button className="like-button" onClick={() => handleLikeButton(post.owner.id, post.id, post.isLiked)}>
-                    {post.isLiked ? <FontAwesomeIcon icon={faHeart} /> : <FontAwesomeIcon icon={faHeart} />} {post.likes}
+                    {post.isLiked ? <FontAwesomeIcon icon={fasHeart} /> : <FontAwesomeIcon icon={farHeart}  />} {post.likes}
                 </button>
         </div>
     )
