@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./routes/Login/Login";
 import Register from "./routes/Register/Register";
 import Feed from "./routes/Feed/Feed";
-import Following from "./routes/Following/Following";
 import Profile from "./routes/Profile/Profile";
 import AuthProvider from "./hooks/AuthProvider";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
