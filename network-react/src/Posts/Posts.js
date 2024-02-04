@@ -13,15 +13,11 @@ export default function Posts() {
     const [loading, setLoading] = useState(true);
     const location = useLocation()
     let { username } = useParams();
-    // console.log("pagePUT", page)
 
     useEffect(() => {
 
-        // console.log("page", page)
         let apiUrl
-
-        // const regex = /^\/\w+$/;
-        if (location.pathname === "/dashboard" || "/") {
+        if (location.pathname === "/dashboard" || location.pathname === "/") {
             apiUrl = `/get-posts-for-you?pageNumber=${pageNumber}`
         } else if (location.pathname === "/following") {
             apiUrl = `/get-posts-following?pageNumber=${pageNumber}`
@@ -32,7 +28,6 @@ export default function Posts() {
         //  else if (regex.test(location.pathname)) {
         //     apiUrl = "/get-posts-for-user-profile"
         // }
-
         setLoading(true)
         fetch(apiUrl,
             { method: 'GET',
@@ -45,10 +40,10 @@ export default function Posts() {
             })
             .then((page) => {
                 setPage(page)
-                console.log("page", page)
-                // setPosts(posts)
                 setLoading(false);
             })
+
+        console.log("page.posts", page.posts)
     }, [location, pageNumber])
 
 
@@ -62,15 +57,16 @@ export default function Posts() {
 
     return (
         <div className="posts-wrapper">
-
-            {page.posts.map((post) => {
-               return <Post key={post.id} post={post} page={page} setPage={setPage} />
-            })}
+            {page.posts === null ? 
+            page.posts.map((post) => {
+                return <Post key={post.id} post={post} page={page} setPage={setPage} />
+             }) : <p>You don't follow any one yet!</p>}
+            
             <div className="page-control-buttons-wrapper">
 
-                {page.page_has_previous && <button onClick={() => setPageNumber(pageNumber - 1)}>previous</button>}
+                {page.page_has_previous && <button onClick={() => setPageNumber(pageNumber - 1)}>Previous</button>}
 
-                {page.page_has_next && <button onClick={() => setPageNumber(pageNumber + 1)}>next</button>}
+                {page.page_has_next && <button onClick={() => setPageNumber(pageNumber + 1)}>More posts</button>}
             </div>
         </div>
     );

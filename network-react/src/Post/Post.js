@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import "./Post.scss";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPenToSquare, faXmark, faFloppyDisk} from '@fortawesome/free-solid-svg-icons';
+import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
+import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
 
 export default function Post({post, page, setPage}) {
 
     const userData = JSON.parse(localStorage.getItem("userData"));
-    // console.log("page", page)
-
 
     function handlePostEditChagne(e, postId) {
 
@@ -30,8 +32,6 @@ export default function Post({post, page, setPage}) {
             }
         })})
     }
-
-
 
     function handleSaveEditedPostButton(post) {
 
@@ -172,26 +172,22 @@ export default function Post({post, page, setPage}) {
                         <p className="username">@{post.owner.username}</p>
                     </Link>
                     <p className="date">{post.date_released}</p>
-                    {post.owner.username === userData.username && <button onClick={() => handleEditButton(post.id)}>
-                        {post.editMode ? 'close' : 'Edit'}
+                    {post.owner.username === userData.username && <button className="edit-button" onClick={() => handleEditButton(post.id)}>
+                        {post.editMode ? <FontAwesomeIcon icon={faXmark} /> : <FontAwesomeIcon icon={faPenToSquare} />}
                     </button>}
                     
                 </div>
                 <div className="post-content-wrapper">
                     {post.editMode  ?  (<><textarea onChange={(e) => handlePostEditChagne(e, post.id)} value={post.content}></textarea>
-                    <button onClick={() => handleSaveEditedPostButton(post)}>save</button>
+                    <button onClick={() => handleSaveEditedPostButton(post)}><FontAwesomeIcon icon={faFloppyDisk} /></button>
                     </>) :  ( <p className="post-content">
                         {post.content}
                     </p>)}
-                    {/* <p className="post-content">
-                        {post.content}
-                    </p> */}
-
                 </div>
             </div>
     
             <button className="like-button" onClick={() => handleLikeButton(post.owner.id, post.id, post.isLiked)}>
-                    {post.isLiked ? 'Unlike' : 'Like'} {post.likes}
+                    {post.isLiked ? <FontAwesomeIcon icon={fasHeart} /> : <FontAwesomeIcon icon={farHeart}  />} {post.likes}
                 </button>
         </div>
     )

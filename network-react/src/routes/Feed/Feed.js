@@ -1,15 +1,15 @@
 import Posts from "../../Posts/Posts";
 import TopNavBar from "../../TopNavBar/TopNavBar";
-import "./Dashboard.scss"
+import "./Feed.scss"
 
-function Dashboard() {
+function Feed() {
 
   return (
     
     
       // <div className="parent-container" >
       <>
-        <div className="dashboard-container">
+        <div className="feed-container">
           <TopNavBar></TopNavBar>
 
           <Posts></Posts>
@@ -21,4 +21,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Feed;
