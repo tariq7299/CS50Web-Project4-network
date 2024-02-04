@@ -132,21 +132,7 @@ def get_posts_for_user_profile(request, username):
 def post(request, user_id, post_id):
     if request.method == "PUT":
         data = json.loads(request.body)
-        
-        
-        # This was a removed feature in my app, that was a follow button in every post, then i removed this feature
-        
-        # if data.get("isFollowed") is not None:
-        #     if data["isFollowed"]:
-        #         if not Follower.objects.filter(followed_id=user_id, follower=request.user).exists():                
-        #             follow = Follower(followed_id=user_id, follower=request.user)
-        #             follow.save()
-        #     else:
-        #         if Follower.objects.filter(followed_id=user_id, follower=request.user).exists():               
-        #             follow = Follower.objects.filter(followed_id=user_id, follower=request.user).first()
-        #             follow.delete()
-
-        #     return JsonResponse({"message": "Successfully updated follow status."})
+        print("data", data)
         
         if data.get("postContent") is not None:
             try:
@@ -154,15 +140,14 @@ def post(request, user_id, post_id):
             except Post.DoesNotExist:
                 return JsonResponse({"error": "Post doesn't exist."}, status=400)
             
-            post = PostSerializer(post, many=True).data[0]
+            serlized_post = PostSerializer(post, many=True).data[0]
             
-            post_owner = post["owner"]["username"]
+            post_owner = serlized_post["owner"]["username"]
                 
             if request.user.username != post_owner:
                 return JsonResponse({"error": "Can't edit this post, owner only can edit !."}, status=400)
             
             if data["postContent"]:
-                    
                 post.update(content=data["postContent"])
             else:
                     return JsonResponse({"error": "Please provide content."}, status=400)
