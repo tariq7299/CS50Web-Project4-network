@@ -8,13 +8,11 @@ function Feed() {
     
     
       // <div className="parent-container" >
-      <>
         <div className="feed-container">
           <TopNavBar></TopNavBar>
 
           <Posts></Posts>
         </div>
-      </>
 
 
     
