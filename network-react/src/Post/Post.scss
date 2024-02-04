@@ -1,34 +1,52 @@
 .post-wrapper{
     position: relative;
-    padding: 0rem 1rem;
+    padding: 1rem 1rem;
     width: 100%;
-    min-height: 10rem;
+    min-height: 12rem;
     max-height: 20rem;
     overflow: hidden;
     display: flex;
     flex-flow: row;
     gap: 8px;
     justify-content: start;
-    align-items: start;
+    // align-items: baseline;
     border-bottom: 1px solid var(--border-color);
     
+    .user-porfile-link {
+      display: inline;
+      margin: 0;
+    }
+
     .profile-image-wrapper{
       display: flex;
+
       flex-direction: column;
+      justify-content: start;
+      // align-items: start;
       flex-basis: 2.5rem;
+      // width: 100px;
       flex-shrink: 0;
       img {
         width: 100%;
         height: auto;
       }
-
     }
 
     .username-post-content-wrapper{
       display: flex;
       flex-flow: column;
+      // padding-top: 1rem;
+      // flex-grow: 1;
 
       .userActualName-username-date-wrapper{
+        
+        // flex-basis: 400px;
+        // display: flex;
+        // flex-wrap: nowrap;
+        // flex-direction: row;
+        // align-items: baseline;
+        // width: 100%;
+
         p {
           padding: 0px;
           margin: 0px;

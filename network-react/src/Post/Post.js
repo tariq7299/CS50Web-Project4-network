@@ -157,18 +157,19 @@ export default function Post({post, page, setPage}) {
     return (
         <div className="post-wrapper">
             <div className="profile-image-wrapper">
-            <Link to={`/profile/${post.owner.username}`}>
+            <Link className="user-porfile-link" to={`/profile/${post.owner.username}`}>
                 <img src="/default-profile.svg.png" alt="Profile"></img>
             </Link>
             </div>
     
             <div className="username-post-content-wrapper">
+
                 <div className="userActualName-username-date-wrapper">
-                    <Link to={`/profile/${post.owner.username}`}>
+                    <Link className="user-porfile-link" to={`/profile/${post.owner.username}`}>
                         <p className="userActualName">{post.owner.first_name} {post.owner.last_name}</p>
                         <p className="username">@{post.owner.username}</p>
+                        <p className="date">{post.date_released}</p>
                     </Link>
-                    <p className="date">{post.date_released}</p>
                     {post.owner.username === userData.username && <button className="edit-button" onClick={() => handleEditButton(post.id)}>
                         {post.editMode ? <FontAwesomeIcon icon={faXmark} /> : <FontAwesomeIcon icon={faPenToSquare} />}
                     </button>}
