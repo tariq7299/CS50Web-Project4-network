@@ -5,12 +5,13 @@ import { useParams } from 'react-router-dom';
 
 export default function Profile(){
 
-    const [isFollowed, setIsFollowed] = useState(null);
+    const [userStatus, setUserStatus] = useState(null);
     const userData = JSON.parse(localStorage.getItem("userData"));
     let { username } = useParams();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`/follow/${username}`,
+        fetch(`/get-user-status/${username}`,
             { method: 'GET',
             headers: { 'Authorization': 'Basic ' + btoa(`${userData.username}:${userData.password}`) }})
             .then((response) => {
@@ -19,11 +20,11 @@ export default function Profile(){
                 }
                 return response.json()
             })
-            .then((followStatus) => {
-                console.log("followStatus", followStatus)
-                setIsFollowed(followStatus.isFollowed);
+            .then((userStatus) => {
+                setUserStatus(userStatus);
+                setLoading(false);
             })
-    })
+    }, [])
     // Here I do two things:
     //  first I change the posts variable that is in react state (I could instead refetch posts data from the server again, but instead I just changed the posts value i have here)
     // Second I send a put request to change isFollowed for the post owner
@@ -36,13 +37,13 @@ export default function Profile(){
                 'Content-Type': 'application/json',
                 'Authorization': 'Basic ' + btoa(`${userData.username}:${userData.password}`)
             },
-            body: JSON.stringify({isFollowed: !isFollowed })
+            body: JSON.stringify({isFollowed: !userStatus.isFollowed })
         })
         .then(response => {
             if (!response.ok) {
                 return response.json().then(result => Promise.reject(result.error));
               }
-              setIsFollowed(!isFollowed)
+              setUserStatus({...userStatus, isFollowed:!userStatus.isFollowed})
               return response.json();
         })
         .then(data => {
@@ -53,23 +54,36 @@ export default function Profile(){
             console.error('Error:', error);
         });
     }
+
+
+    if (loading) {
+        return (
+            <div className="posts-wrapper">
+                <h1>Loading...</h1>
+            </div>
+        ) 
+    }
     
 return (
-    <div className="parent-container">
-        <p className="upper-user-name">userFirstname userLastname</p>
-        <p>Number of posts</p>
+    <div className="profile-container">
+        <p className="upper-user-name">{userData.firstname} {userData.lastname}</p>
+        <p>{userStatus.posts_count} posts</p>
+
         <div className="image-container">
             <img className="cover-image" src="/wideProfileImage.jpg" ></img>
             <img className="profile-image" src="/default-profile.svg.png"></img>
         </div>
-        <p className="lower-user-name">userFirstname userLastname</p>
-        <p className="username">username</p>
+
+        <p className="lower-user-name">{userData.firstname} {userData.lastname}</p>
+        <p className="username">@{userData.username}</p>
+
         {userData.username !== username && 
-        <button onClick={() => handleFollowButton()}>{isFollowed ? 'Unfollow' : 'Follow'}</button>}
-        <p className="following">Number of following</p>
-        <p className="followers">Number of followers</p>
+        <button onClick={() => handleFollowButton()}>{userStatus.isFollowed ? 'Unfollow' : 'Follow'}</button>}
+        <p className="followers">{userStatus.following_count} Following</p>
+        <p className="following">{userStatus.followers_count} Followers</p>
 
         <Posts></Posts>
+        
     </div>
 )
 }

@@ -8,7 +8,6 @@ import { Link, useNavigate } from "react-router-dom";
 export default function Posts() {
     const userData = JSON.parse(localStorage.getItem("userData"));
     const [page, setPage] = useState({})
-    // const [posts, setPosts] = useState([])
     const [pageNumber, setPageNumber] = useState(1);
     const [loading, setLoading] = useState(true);
     const location = useLocation()
@@ -42,8 +41,6 @@ export default function Posts() {
                 setPage(page)
                 setLoading(false);
             })
-
-        console.log("page.posts", page.posts)
     }, [location, pageNumber])
 
 
@@ -57,10 +54,10 @@ export default function Posts() {
 
     return (
         <div className="posts-wrapper">
-            {page.posts === null ? 
+            {page.posts.length !== 0  ? 
             page.posts.map((post) => {
                 return <Post key={post.id} post={post} page={page} setPage={setPage} />
-             }) : <p>You don't follow any one yet!</p>}
+             }) : <p>No posts!</p>}
             
             <div className="page-control-buttons-wrapper">
 

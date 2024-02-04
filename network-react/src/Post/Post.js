@@ -119,9 +119,6 @@ export default function Post({post, page, setPage}) {
         //  first I change the posts variable that is in react state (I could instead refetch posts data from the server again, but instead I just changed the posts value i have here)
         // Second I send a put request to change isLiked for the post owner
         // Change is followed for this user
-        console.log("userId", userId)
-        console.log("postId", postId)
-        console.log("isLiked", isLiked)
         setPage({...page, posts: page.posts.map((post) => {
             if (post.id === postId && isLiked) {
                 return {...post, isLiked: false, likes: post.likes-1}

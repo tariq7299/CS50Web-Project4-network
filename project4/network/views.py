@@ -22,8 +22,6 @@ def login_view(request):
     if request.method == "POST":
         user_data = json.loads(request.body)
         
-        print(user_data)
-
         # Attempt to sign user in
         username = user_data["username"]
         password = user_data["password"]
@@ -32,10 +30,8 @@ def login_view(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            print("request.user", request.user)
             user_data = UserSerializer(request.user).data
             # user_data = {"username": request.user.username, "email": request.user.email, "firstname": request.user.first_name, "lastname": request.user.last_name}
-            print("user_data", user_data)
             return JsonResponse({"user_data": user_data})
         else:
             return JsonResponse({"message": "Invalid username and/or password"})
@@ -54,7 +50,6 @@ def register(request):
     if request.method == "POST":
         user_data = json.loads(request.body)
         
-        print("user_data", user_data)
         firstname = user_data["firstname"]
         lastname = user_data["lastname"]
         email = user_data["email"]
@@ -122,13 +117,12 @@ def get_posts_for_user_profile(request, username):
     page_number = request.GET.get('pageNumber')
     try:
         post_handler = PostHandler(request)
+        
         page = post_handler.get_posts_for_user_profile(username, page_number)
         
-        # print("posts", posts)
         return JsonResponse(page, safe=False)
     except NoPostsYet as err_msg:
         return JsonResponse({"message": err_msg}, safe=False)
-
 
 
 # THis required in BASIC AUTHENTICATION
@@ -194,7 +188,7 @@ def post(request, user_id, post_id):
 @permission_classes([IsAuthenticated])
 @csrf_exempt
 def follow(request, username):
-    print("username", username)
+    
     try:
         requested_user = User.objects.get(username=username)
     except User.DoesNotExist:
@@ -202,8 +196,6 @@ def follow(request, username):
         
     if request.method == "PUT":
         data = json.loads(request.body)
-        
-        
         # This was a removed feature in my app, that was a follow button in every post, then i removed this feature
         
         if data.get("isFollowed") is not None:
@@ -227,22 +219,39 @@ def follow(request, username):
        
     return JsonResponse({"error": "Invalid request method."}, status=400)
 
-def pagination(request):
-    posts = Post.objects.all()
-    paginator = Paginator(posts, 25)
-    # print("paginator", paginator.object_list)
-    # print("paginator", paginator.object_list.values())
-    return JsonResponse("YES", safe=False)
     
-# @api_view(['GET'])
-# @authentication_classes([BasicAuthentication])
-# @permission_classes([IsAuthenticated])
-# def get_user_info(request, format=None):
+# THis required in BASIC AUTHENTICATION
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+@csrf_exempt
+def get_user_status(request, username):
     
-#     content = {
-#         'user': str(request.user),  # `django.contrib.auth.User` instance.
-#         'auth': str(request.auth),  # None
-#     }
-#     print("content", content)
-#     return Response(content)
+    try:
+        requested_user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return JsonResponse({"error": "Invalid user"}, status=400)
+        
+    if request.method == "GET":
+        
+        # This was a removed feature in my app, that was a follow button in every post, then i removed this feature
+        
+        requested_user = User.objects.get(username=username)
+        
+        posts_count = Post.objects.filter(owner=requested_user).count()
+        
+        followers_count = Follower.objects.filter(followed=requested_user).count()        
+        
+        following_count = Follower.objects.filter(follower=requested_user).count()
+        
+        user_status = {"posts_count": posts_count, "followers_count": followers_count, "following_count":following_count}
+        
+        if Follower.objects.filter(followed=requested_user, follower=request.user).exists():
+            user_status["isFollowed"] = True
+        else:
+            user_status["isFollowed"] = False
+        
+        return JsonResponse(user_status)
+    
+    return JsonResponse({"error": "Invalid request method."}, status=400)
+
     
