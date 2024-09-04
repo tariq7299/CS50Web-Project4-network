@@ -13,6 +13,13 @@ from rest_framework.permissions import IsAuthenticated
 from django.core.paginator import Paginator
 
 
+
+
+# This will only work in DEBUG = False
+# And will only work if also there is a "404.html" file in templates/ folder
+def custom_404_view(request, exception):
+    return render(request, 'network/404.html', status=404)
+
 def index(request):
     return render(request, "network/index.html")
 
@@ -36,7 +43,7 @@ def login_view(request):
         else:
             return JsonResponse({"message": "Invalid username and/or password"})
     else:
-        return render(request, "network/login.html")
+        return HttpResponseRedirect(reverse("index"))
 
 
 @csrf_exempt
@@ -70,7 +77,7 @@ def register(request):
         login(request, user)
         return JsonResponse({"user_data": user_data})
     else:
-        return render(request, "network/register.html")
+        return HttpResponseRedirect(reverse("index"))
 
 
 @csrf_exempt

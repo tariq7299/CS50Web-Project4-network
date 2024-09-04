@@ -3,18 +3,18 @@ import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
-function AuthProvider ({ children }) {
+function AuthProvider({ children }) {
 
   const navigate = useNavigate();
 
   function CheckIfAuthenticated() {
 
     const userData = JSON.parse(localStorage.getItem("userData"));
-    if (userData === null) {
-        return false;
+    if (userData) {
+      return true;
     }
-    return true;
-    
+    return false;
+
     //   return fetch("/get-user-info", 
     //   {method: 'GET',
     //   headers: { 'Authorization': 'Basic ' + btoa('teka:1122') }
@@ -29,7 +29,7 @@ function AuthProvider ({ children }) {
     //       // return false
     //     })
     //     .catch(error => {
-          // console.error('Error:', error);
+    // console.error('Error:', error);
     //       // return false
     //     });
 
@@ -56,6 +56,7 @@ function AuthProvider ({ children }) {
       }
       throw new Error(res.message);
     } catch (err) {
+      alert("Wrong username/password! Please try again")
       console.error(err);
     }
   };
@@ -90,7 +91,7 @@ function AuthProvider ({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{CheckIfAuthenticated, loginAction, registerAction, logOut}}>
+    <AuthContext.Provider value={{ CheckIfAuthenticated, loginAction, registerAction, logOut }}>
       {children}
     </AuthContext.Provider>
   );

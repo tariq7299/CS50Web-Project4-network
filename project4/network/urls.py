@@ -1,7 +1,8 @@
 
 from django.urls import path
-
 from . import views
+
+
 
 urlpatterns = [
     path("", views.index, name="index"),
@@ -17,3 +18,4 @@ urlpatterns = [
     path("get-user-status/<str:username>", views.get_user_status, name="get_user_status"),
     # path("pagination", views.pagination, name="pagination"),
 ]
+

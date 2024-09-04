@@ -23,6 +23,7 @@ export default function Post({post, page, setPage}) {
 
     function handleEditButton(postId) {
         // Change is followed for this user
+        console.log("page", page)
         setPage({...page, posts:page.posts.map((post) => {
             if (post.id === postId)  {
                 console.log("post.editMode", post.editMode)

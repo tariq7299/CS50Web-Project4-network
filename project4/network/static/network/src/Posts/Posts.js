@@ -1,6 +1,6 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import "./Posts.scss";
-import Post from "./../Post/Post"
+import Post from "../Post/Post"
 import { useLocation, useParams } from 'react-router-dom';
 import { Link, useNavigate } from "react-router-dom";
 
@@ -22,18 +22,20 @@ export default function Posts() {
             apiUrl = `/get-posts-following?pageNumber=${pageNumber}`
         } else if (username) {
             apiUrl = `/get-posts-for-user-profile/${username}?pageNumber=${pageNumber}`
-        } 
+        }
         // You can use reguler expression instead of useParams()
         //  else if (regex.test(location.pathname)) {
         //     apiUrl = "/get-posts-for-user-profile"
         // }
         setLoading(true)
         fetch(apiUrl,
-            { method: 'GET',
-            headers: { 'Authorization': 'Basic ' + btoa(`${userData.username}:${userData.password}`) }})
+            {
+                method: 'GET',
+                headers: { 'Authorization': 'Basic ' + btoa(`${userData.username}:${userData.password}`) }
+            })
             .then((response) => {
                 if (!response.ok) {
-                return response.json().then((data) => Promise.reject(data.error))
+                    return response.json().then((data) => Promise.reject(data.error))
                 }
                 return response.json()
             })
@@ -49,16 +51,16 @@ export default function Posts() {
             <div className="posts-wrapper">
                 <h1>Loading...</h1>
             </div>
-        ) 
+        )
     }
 
     return (
         <div className="posts-wrapper">
-            {page.posts.length !== 0  ? 
-            page.posts.map((post) => {
-                return <Post key={post.id} post={post} page={page} setPage={setPage} />
-             }) : <p>No posts!</p>}
-            
+            {page.posts.length !== 0 ?
+                page.posts.map((post) => {
+                    return <Post key={post.id} post={post} page={page} setPage={setPage} />
+                }) : <h1 className="text-center">No posts</h1>}
+
             <div className="page-control-buttons-wrapper">
 
                 {page.page_has_previous && <button onClick={() => setPageNumber(pageNumber - 1)}>Previous</button>}
