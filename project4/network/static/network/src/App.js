@@ -6,28 +6,29 @@ import Profile from "./routes/Profile/Profile";
 import AuthProvider from "./hooks/AuthProvider";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import Root from "./routes/Root/Root";
+import * as React from "react"
 
 function App() {
- 
+
   return (
     <BrowserRouter>
-        <AuthProvider>
-          <Routes>
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route element={<PrivateRoute />}>
-              <Route path="/" element={<Root />}>
-                <Route index element={<Feed />} />
-                <Route path="/dashboard" element={<Feed />} />
-                <Route path="/following" element={<Feed />} />
-                <Route path="/profile/:username" element={<Profile />} />
-              </Route>
+      <AuthProvider>
+        <Routes>
+          {/* <Route path="/register" element={<Register />} /> */}
+          {/* <Route path="/login" element={<Login />} /> */}
+          <Route element={<PrivateRoute />}>
+            <Route path="/" element={<Root />}>
+              <Route index element={<Feed />} />
+              <Route path="/dashboard" element={<Feed />} />
+              <Route path="/following" element={<Feed />} />
+              <Route path="/profile/:username" element={<Profile />} />
             </Route>
-            {/* Other routes */}
-          </Routes>
-        </AuthProvider>
-      </BrowserRouter>
-    
+          </Route>
+          {/* Other routes */}
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
+
   );
 }
 

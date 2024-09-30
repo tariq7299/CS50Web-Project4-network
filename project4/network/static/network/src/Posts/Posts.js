@@ -1,9 +1,10 @@
+
+import * as React from "react"
 import { useEffect, useState } from 'react';
 import "./Posts.scss";
 import Post from "../Post/Post"
 import { useLocation, useParams } from 'react-router-dom';
 import { Link, useNavigate } from "react-router-dom";
-
 
 export default function Posts() {
     const userData = JSON.parse(localStorage.getItem("userData"));
@@ -30,8 +31,7 @@ export default function Posts() {
         setLoading(true)
         fetch(apiUrl,
             {
-                method: 'GET',
-                headers: { 'Authorization': 'Basic ' + btoa(`${userData.username}:${userData.password}`) }
+                method: 'GET'
             })
             .then((response) => {
                 if (!response.ok) {

@@ -1,37 +1,42 @@
+import * as React from "react"
 import { Link } from "react-router-dom";
 import "./Post.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare, faXmark, faFloppyDisk} from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faXmark, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
 
-export default function Post({post, page, setPage}) {
+export default function Post({ post, page, setPage }) {
 
     const userData = JSON.parse(localStorage.getItem("userData"));
 
     function handlePostEditChagne(e, postId) {
 
-        setPage({...page, posts:page.posts.map((post) => {
-            if (post.id === postId)  {
-                return {...post, content: e.target.value}
-            } else {
-                return post;
-            }
-        })})
+        setPage({
+            ...page, posts: page.posts.map((post) => {
+                if (post.id === postId) {
+                    return { ...post, content: e.target.value }
+                } else {
+                    return post;
+                }
+            })
+        })
 
     }
 
     function handleEditButton(postId) {
         // Change is followed for this user
         console.log("page", page)
-        setPage({...page, posts:page.posts.map((post) => {
-            if (post.id === postId)  {
-                console.log("post.editMode", post.editMode)
-                return {...post, editMode: !post.editMode ?? true}
-            } else {
-                return post;
-            }
-        })})
+        setPage({
+            ...page, posts: page.posts.map((post) => {
+                if (post.id === postId) {
+                    console.log("post.editMode", post.editMode)
+                    return { ...post, editMode: !post.editMode ?? true }
+                } else {
+                    return post;
+                }
+            })
+        })
     }
 
     function handleSaveEditedPostButton(post) {
@@ -39,47 +44,58 @@ export default function Post({post, page, setPage}) {
         const currentPostId = post.id
 
         // Send a put request to server "localhost:8000/<userId>"
+        // fetch(`/post/${post.owner.id}/${post.id}`, {
+        //     method: "PUT",
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': 'Basic ' + btoa(`${userData.username}:${userData.password}`)
+        //     },
+        //     body: JSON.stringify({ postContent: post.content })
+        // })
         fetch(`/post/${post.owner.id}/${post.id}`, {
             method: "PUT",
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa(`${userData.username}:${userData.password}`)
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({postContent: post.content})
+            body: JSON.stringify({ postContent: post.content })
         })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(result => Promise.reject(result.error));
-              }
-              return response.json();
-        })
-        .then(data => {
-            const SuccessMessage = data.message.toString();
-            console.log("Success message", SuccessMessage)
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-            setPage({...page, posts:page.posts.map((post) => {
-                if (post.id === currentPostId)  {
-                    return {...post, editMode: true}
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(result => Promise.reject(result.error));
+                }
+                return response.json();
+            })
+            .then(data => {
+                const SuccessMessage = data.message.toString();
+                console.log("Success message", SuccessMessage)
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                setPage({
+                    ...page, posts: page.posts.map((post) => {
+                        if (post.id === currentPostId) {
+                            return { ...post, editMode: true }
+                        } else {
+                            return post;
+                        }
+                    })
+                })
+            });
+
+        setPage({
+            ...page, posts: page.posts.map((post) => {
+                if (post.id === currentPostId) {
+                    return { ...post, editMode: !post.editMode }
                 } else {
                     return post;
                 }
-            })})
-        });
-
-        setPage({...page, posts:page.posts.map((post) => {
-            if (post.id === currentPostId)  {
-                return {...post, editMode: !post.editMode}
-            } else {
-                return post;
-            }
-        })})
+            })
+        })
     }
 
     // THis was the logic for a removed follow button, that was located in every post
 
-     // Here I do two things:
+    // Here I do two things:
     //  first I change the posts variable that is in react state (I could instead refetch posts data from the server again, but instead I just changed the posts value i have here)
     // Second I send a put request to change isFollowed for the post owner
     // function handleFollowButton(userId, postId, isFollowed) {
@@ -114,43 +130,44 @@ export default function Post({post, page, setPage}) {
     //         console.error('Error:', error);
     //     });
     // }
-    
+
     function handleLikeButton(userId, postId, isLiked) {
         // Here I do two things:
         //  first I change the posts variable that is in react state (I could instead refetch posts data from the server again, but instead I just changed the posts value i have here)
         // Second I send a put request to change isLiked for the post owner
         // Change is followed for this user
-        setPage({...page, posts: page.posts.map((post) => {
-            if (post.id === postId && isLiked) {
-                return {...post, isLiked: false, likes: post.likes-1}
-            } else if (post.id === postId && !isLiked) {
-                return {...post, isLiked: true, likes: post.likes+1}
-            } else {
-                return post
-            }
-        })})
+        setPage({
+            ...page, posts: page.posts.map((post) => {
+                if (post.id === postId && isLiked) {
+                    return { ...post, isLiked: false, likes: post.likes - 1 }
+                } else if (post.id === postId && !isLiked) {
+                    return { ...post, isLiked: true, likes: post.likes + 1 }
+                } else {
+                    return post
+                }
+            })
+        })
         // Send a put request to server "localhost:8000/<userId>"
         fetch(`/post/${userId}/${postId}`, {
             method: "PUT",
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa(`${userData.username}:${userData.password}`)
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({isLiked: !isLiked })
+            body: JSON.stringify({ isLiked: !isLiked })
         })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(result => Promise.reject(result.error));
-              }
-              return response.json();
-        })
-        .then(data => {
-            const SuccessMessage = data.message.toString();
-            console.log("Success message", SuccessMessage)
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(result => Promise.reject(result.error));
+                }
+                return response.json();
+            })
+            .then(data => {
+                const SuccessMessage = data.message.toString();
+                console.log("Success message", SuccessMessage)
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
 
     }
 
@@ -158,11 +175,16 @@ export default function Post({post, page, setPage}) {
     return (
         <div className="post-wrapper">
             <div className="profile-image-wrapper">
-            <Link className="user-porfile-link" to={`/profile/${post.owner.username}`}>
-                <img src="/default-profile.svg.png" alt="Profile"></img>
-            </Link>
+                <Link className="user-porfile-link" to={`/profile/${post.owner.username}`}>
+                    <img src="/network/static/network/public/default-profile.svg.png" alt="Profile"></img>
+                    <img src="/network/default-profile.svg.png" alt="Profile"></img>
+                    <img src="/network/static/default-profile.svg.png" alt="Profile"></img>
+                    <img src="/default-profile.svg.png" alt="Profile"></img>
+                    <img src="/public/default-profile.svg.png" alt="Profile"></img>
+                    {/* <img src="/default-profile.svg.png" alt="Profile"></img> */}
+                </Link>
             </div>
-    
+
             <div className="username-post-content-wrapper">
 
                 <div className="userActualName-username-date-wrapper">
@@ -174,20 +196,20 @@ export default function Post({post, page, setPage}) {
                     {post.owner.username === userData.username && <button className="edit-button" onClick={() => handleEditButton(post.id)}>
                         {post.editMode ? <FontAwesomeIcon icon={faXmark} /> : <FontAwesomeIcon icon={faPenToSquare} />}
                     </button>}
-                    
+
                 </div>
                 <div className="post-content-wrapper">
-                    {post.editMode  ?  (<><textarea onChange={(e) => handlePostEditChagne(e, post.id)} value={post.content}></textarea>
-                    <button onClick={() => handleSaveEditedPostButton(post)}><FontAwesomeIcon icon={faFloppyDisk} /></button>
-                    </>) :  ( <p className="post-content">
+                    {post.editMode ? (<><textarea onChange={(e) => handlePostEditChagne(e, post.id)} value={post.content}></textarea>
+                        <button onClick={() => handleSaveEditedPostButton(post)}><FontAwesomeIcon icon={faFloppyDisk} /></button>
+                    </>) : (<p className="post-content">
                         {post.content}
                     </p>)}
                 </div>
             </div>
-    
+
             <button className="like-button" onClick={() => handleLikeButton(post.owner.id, post.id, post.isLiked)}>
-                    {post.isLiked ? <FontAwesomeIcon icon={fasHeart} /> : <FontAwesomeIcon icon={farHeart}  />} {post.likes}
-                </button>
+                {post.isLiked ? <FontAwesomeIcon icon={fasHeart} /> : <FontAwesomeIcon icon={farHeart} />} {post.likes}
+            </button>
         </div>
     )
 }

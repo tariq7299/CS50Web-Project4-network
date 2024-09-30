@@ -1,30 +1,13 @@
+
 {% extends "network/layout.html" %}
+{% load static %}
 
 {% block body %}
+  <!-- The container for my React components -->
+  <div id="root"></div>
 
-    <div class="text-center">
-    <h1 class="text-center"> Welcome to <span class="text-success display-3 text-center network-word fw-bold">Netwrok</span> project ! </h1>
+{% endblock %}
 
-    <p>
-    Go to <a href="https://github.com/me50/tariq7299/tree/e15085fb98345e6bff04a8c1e580c625d370f217">netwrok README FILE</a> and then follow the steps and instructions to run the frontend app of this project.
-    </p>
-
-    <p>
-        After this you can visit and start the netwrok app by visiting
-        <a href="http://localhost:3000/">network project home page</a> <i class="fw-lighter">port 3000 by default</i>
-        <br>
-    </p>
-    
-    <p>
-    And then you will be able to acces the app throgh url  <span>by default meaning you didn't change the port of server which is <i>localhost:8000</i> and port of frontend of <i>localhost:3000</i>  </span>
-    </p>
-
-    <p>
-        If you change any of the default ports you just need to change them also in the application config
-    </p>
-</div>
-    
-
-   
-
+{% block script %}
+<script src="{% static 'network/dist/bundle.js' %}"></script>
 {% endblock %}
