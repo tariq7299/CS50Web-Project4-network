@@ -3,31 +3,26 @@ import * as React from "react"
 import { useEffect, useState } from 'react';
 import "./Posts.scss";
 import Post from "../Post/Post"
-import { useLocation, useParams } from 'react-router-dom';
-import { Link, useNavigate } from "react-router-dom";
+import { useCurrentView } from "../hooks/CurrentViewContext";
 
-export default function Posts() {
-    const userData = JSON.parse(localStorage.getItem("userData"));
+export default function Posts({ postsType, pageNumber, setPageNumber }) {
+
+    const { currentView } = useCurrentView();
     const [page, setPage] = useState({})
-    const [pageNumber, setPageNumber] = useState(1);
     const [loading, setLoading] = useState(true);
-    const location = useLocation()
-    let { username } = useParams();
+    const { profileUserName } = currentView
+
 
     useEffect(() => {
-
         let apiUrl
-        if (location.pathname === "/dashboard" || location.pathname === "/") {
+
+        if (postsType === "forYou") {
             apiUrl = `/get-posts-for-you?pageNumber=${pageNumber}`
-        } else if (location.pathname === "/following") {
+        } else if (postsType === "following") {
             apiUrl = `/get-posts-following?pageNumber=${pageNumber}`
-        } else if (username) {
-            apiUrl = `/get-posts-for-user-profile/${username}?pageNumber=${pageNumber}`
+        } else if (postsType === "profile") {
+            apiUrl = `/get-posts-for-user-profile/${profileUserName}?pageNumber=${pageNumber}`
         }
-        // You can use reguler expression instead of useParams()
-        //  else if (regex.test(location.pathname)) {
-        //     apiUrl = "/get-posts-for-user-profile"
-        // }
         setLoading(true)
         fetch(apiUrl,
             {
@@ -43,7 +38,7 @@ export default function Posts() {
                 setPage(page)
                 setLoading(false);
             })
-    }, [location, pageNumber])
+    }, [pageNumber, postsType])
 
 
     if (loading) {

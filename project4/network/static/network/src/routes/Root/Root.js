@@ -1,19 +1,18 @@
 import { useState } from 'react';
 import NewPostModal from "../../NewPostModal/NewPostModal";
 import SideNavBar from "../../SideNavBar/SideNavBar";
-import TopNavBar from '../../TopNavBar/TopNavBar';
 import "./Root.scss";
-import { Navigate, Outlet } from "react-router-dom";
 import * as React from "react"
-
+import { useCurrentView } from '../../hooks/CurrentViewContext';
 // import AuthProvider from "./../hooks/AuthProvider";
+import Feed from '../Feed/Feed';
+import Profile from '../Profile/Profile';
 
-
-function Root() {
+export function Root() {
   const [isActive, setIsActive] = useState(false)
   // const [postContent, setPostContent] = useState("")
 
-
+  const { currentView } = useCurrentView();
 
   function handelPostModal() {
     setIsActive(!isActive)
@@ -29,7 +28,16 @@ function Root() {
 
       <NewPostModal handelPostModal={handelPostModal} isActive={isActive}></NewPostModal>
 
-      <Outlet />
+      {currentView?.view === "forYou"
+        ? (<Feed postsType="forYou" />)
+        : currentView?.view === "following"
+          ? (<Feed postsType="following" />)
+          : currentView?.view === "profile"
+            ? (<Profile postsType="profile" />)
+            : null}
+
+      {/* {children} */}
+      {/* <Outlet /> */}
 
 
     </div>

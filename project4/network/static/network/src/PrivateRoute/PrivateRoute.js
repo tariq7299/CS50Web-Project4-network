@@ -11,7 +11,6 @@ async function checkIfAuthenticated() {
 
     if (response.ok) {
       const data = await response.json()
-      console.log("data", data)
       if (data.userData) {
         localStorage.setItem("userData", JSON.stringify(data.userData));
         return true;

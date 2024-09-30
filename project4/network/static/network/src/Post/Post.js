@@ -5,8 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faXmark, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
+import "./../../public/default-profile.svg.png"
+import { useCurrentView } from "../hooks/CurrentViewContext";
 
 export default function Post({ post, page, setPage }) {
+
+    const { handleSetCurrView } = useCurrentView()
 
     const userData = JSON.parse(localStorage.getItem("userData"));
 
@@ -26,7 +30,6 @@ export default function Post({ post, page, setPage }) {
 
     function handleEditButton(postId) {
         // Change is followed for this user
-        console.log("page", page)
         setPage({
             ...page, posts: page.posts.map((post) => {
                 if (post.id === postId) {
@@ -43,15 +46,6 @@ export default function Post({ post, page, setPage }) {
 
         const currentPostId = post.id
 
-        // Send a put request to server "localhost:8000/<userId>"
-        // fetch(`/post/${post.owner.id}/${post.id}`, {
-        //     method: "PUT",
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Authorization': 'Basic ' + btoa(`${userData.username}:${userData.password}`)
-        //     },
-        //     body: JSON.stringify({ postContent: post.content })
-        // })
         fetch(`/post/${post.owner.id}/${post.id}`, {
             method: "PUT",
             headers: {
@@ -93,44 +87,6 @@ export default function Post({ post, page, setPage }) {
         })
     }
 
-    // THis was the logic for a removed follow button, that was located in every post
-
-    // Here I do two things:
-    //  first I change the posts variable that is in react state (I could instead refetch posts data from the server again, but instead I just changed the posts value i have here)
-    // Second I send a put request to change isFollowed for the post owner
-    // function handleFollowButton(userId, postId, isFollowed) {
-    //     // Change is followed for this user
-    //     setPage(posts.map((post) => {
-    //         if (post.owner.id === userId)  {
-    //             return {...post, isFollowed: !isFollowed}
-    //         } else {
-    //             return post;
-    //         }
-    //     }))
-    //     // Send a put request to server "localhost:8000/<userId>"
-    //     fetch(`/post/${userId}/${postId}`, {
-    //         method: "PUT",
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': 'Basic ' + btoa(`${userData.username}:${userData.password}`)
-    //         },
-    //         body: JSON.stringify({isFollowed: !isFollowed })
-    //     })
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             return response.json().then(result => Promise.reject(result.error));
-    //           }
-    //           return response.json();
-    //     })
-    //     .then(data => {
-    //         const SuccessMessage = data.message.toString();
-    //         console.log("Success message", SuccessMessage)
-    //     })
-    //     .catch((error) => {
-    //         console.error('Error:', error);
-    //     });
-    // }
-
     function handleLikeButton(userId, postId, isLiked) {
         // Here I do two things:
         //  first I change the posts variable that is in react state (I could instead refetch posts data from the server again, but instead I just changed the posts value i have here)
@@ -168,27 +124,19 @@ export default function Post({ post, page, setPage }) {
             .catch((error) => {
                 console.error('Error:', error);
             });
-
     }
-
 
     return (
         <div className="post-wrapper">
             <div className="profile-image-wrapper">
-                <Link className="user-porfile-link" to={`/profile/${post.owner.username}`}>
-                    <img src="/network/static/network/public/default-profile.svg.png" alt="Profile"></img>
-                    <img src="/network/default-profile.svg.png" alt="Profile"></img>
-                    <img src="/network/static/default-profile.svg.png" alt="Profile"></img>
-                    <img src="/default-profile.svg.png" alt="Profile"></img>
-                    <img src="/public/default-profile.svg.png" alt="Profile"></img>
-                    {/* <img src="/default-profile.svg.png" alt="Profile"></img> */}
+                <Link className="user-porfile-link" onClick={() => handleSetCurrView("profile", post.owner.username)}>
+                    <img src="/static/network/public/default-profile.svg.png" alt="profile"></img>
                 </Link>
             </div>
 
             <div className="username-post-content-wrapper">
-
                 <div className="userActualName-username-date-wrapper">
-                    <Link className="user-porfile-link" to={`/profile/${post.owner.username}`}>
+                    <Link className="user-porfile-link" onClick={() => handleSetCurrView("profile", post.owner.username)}>
                         <p className="userActualName">{post.owner.first_name} {post.owner.last_name}</p>
                         <p className="username">@{post.owner.username}</p>
                         <p className="date">{post.date_released}</p>

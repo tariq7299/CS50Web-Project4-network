@@ -22,7 +22,8 @@ export default function NewPostModal({ handelPostModal, isActive }) {
       })
       .then(data => {
         const SuccessMessage = data.message.toString();
-        console.log("Success message", SuccessMessage)
+        handelPostModal()
+        window.location.reload();
       })
       .catch(error => {
         console.log(error)
@@ -43,16 +44,16 @@ export default function NewPostModal({ handelPostModal, isActive }) {
 
       <div className="modal-window" style={isActive ? { display: 'block' } : { display: 'none' }}>
 
-        <button onClick={handelPostModal}>Close</button>
+        <button className="btn btn-outline-danger" onClick={handelPostModal}>Close</button>
 
         <div className="profile-image-input-wrapper">
           <div className="profile-image-wrapper">
-            <img src="/default-profile.svg.png"></img>
+            <img src="/static/network/public/default-profile.svg.png"></img>
           </div>
           <textarea name="post-content-input" className="post-content" placeholder="What's happening?" value={postContent} onChange={handlePostContentInput}></textarea>
         </div>
 
-        <button disabled={!postContent.length} onClick={handleNewPostButton}>Post</button>
+        <button className="btn btn-primary" disabled={!postContent.length} onClick={handleNewPostButton}>Post</button>
 
       </div>
 

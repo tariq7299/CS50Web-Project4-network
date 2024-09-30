@@ -1,17 +1,19 @@
 import "./TopNavBar.scss";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/AuthProvider";
+import { Link, } from "react-router-dom";
 import * as React from "react"
+import { useCurrentView } from "../hooks/CurrentViewContext";
 
-export default function TopNavBar({ handelPostModal }) {
+export default function TopNavBar({ handelPostModal, setPageNumber }) {
 
-    const userData = JSON.parse(localStorage.getItem("userData"))
+    const { handleSetCurrView } = useCurrentView();
 
     return (
         <div className="top-navbar-wrapper">
             <div className="top-navbar">
-                <Link to="/dashboard"> For you</Link>
-                <Link to="/following"> Following</Link>
+
+                <Link onClick={() => { handleSetCurrView("forYou"); setPageNumber(1) }}> For you</Link>
+                <Link onClick={() => { handleSetCurrView("following"); setPageNumber(1) }}>Following</Link>
+
             </div>
         </div>
     )

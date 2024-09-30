@@ -52,7 +52,7 @@ def login_view(request):
             return render(
                 request,
                 "network/login.html",
-                {"message": "Invalid email and/or password."},
+                {"message": "Invalid username and/or password."},
             )
     else:
         return render(request, "network/login.html")
@@ -105,7 +105,7 @@ def register(request):
             return render(
                 request,
                 "network/register.html",
-                {"message": "Email address already taken."},
+                {"message": "Username or Email address already taken."},
             )
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
@@ -254,7 +254,14 @@ def follow(request, username):
                     ).first()
                     follow.delete()
 
-            return JsonResponse({"message": "Successfully updated follow status."})
+            followers_count = Follower.objects.filter(followed=requested_user).count()
+
+            return JsonResponse(
+                {
+                    "message": "Successfully updated follow status.",
+                    "followers_count": followers_count,
+                }
+            )
     else:
         if Follower.objects.filter(
             followed=requested_user, follower=request.user
