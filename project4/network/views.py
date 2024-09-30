@@ -127,8 +127,6 @@ def create_new_post(request):
 
 
 @login_required
-# @api_view(["GET"])
-# @permission_classes([IsAuthenticated])
 def get_posts_for_you(request):
     page_number = request.GET.get("pageNumber")
     try:
@@ -141,8 +139,6 @@ def get_posts_for_you(request):
 
 
 @login_required
-# @api_view(["GET"])
-# @permission_classes([IsAuthenticated])
 def get_posts_following(request):
     page_number = request.GET.get("pageNumber")
     try:
@@ -155,8 +151,6 @@ def get_posts_following(request):
 
 
 @login_required
-# @api_view(["GET"])
-# @permission_classes([IsAuthenticated])
 def get_posts_for_user_profile(request, username):
     page_number = request.GET.get("pageNumber")
     try:
@@ -171,13 +165,10 @@ def get_posts_for_user_profile(request, username):
 
 # THis required in BASIC AUTHENTICATION
 @login_required
-# @api_view(["PUT"])
-# @permission_classes([IsAuthenticated])
 @csrf_exempt
 def post(request, user_id, post_id):
     if request.method == "PUT":
         data = json.loads(request.body)
-        print("data", data)
 
         if data.get("postContent") is not None:
             try:
@@ -224,8 +215,6 @@ def post(request, user_id, post_id):
 
 # THis required in BASIC AUTHENTICATION
 @login_required
-# @api_view(["PUT", "GET"])
-# @permission_classes([IsAuthenticated])
 @csrf_exempt
 def follow(request, username):
 
@@ -277,8 +266,6 @@ def follow(request, username):
 
 # THis required in BASIC AUTHENTICATION
 @login_required
-# @api_view(["GET"])
-# @permission_classes([IsAuthenticated])
 @csrf_exempt
 def get_user_status(request, username):
 
@@ -319,12 +306,8 @@ def get_user_status(request, username):
 
 # THis required in BASIC AUTHENTICATION
 @login_required
-# @api_view(["GET"])
-# @permission_classes([IsAuthenticated])
 @csrf_exempt
 def get_current_user_info(request):
-
-    print("request", request)
 
     try:
         User.objects.get(username=request.user.username)
@@ -332,9 +315,6 @@ def get_current_user_info(request):
         return JsonResponse({"error": "Invalid user"}, status=400)
 
     requested_user = User.objects.get(username=request.user.username)
-
-    print("requested_userFIRST", requested_user.first_name)
-    print("requested_userLAST", requested_user.last_name)
 
     current_user_info = {
         "firstName": requested_user.first_name,

@@ -48,7 +48,7 @@ export default function NewPostModal({ handelPostModal, isActive }) {
 
         <div className="profile-image-input-wrapper">
           <div className="profile-image-wrapper">
-            <img src="/static/network/public/default-profile.svg.png"></img>
+            <img src="/static/network/public/default-profile.png"></img>
           </div>
           <textarea name="post-content-input" className="post-content" placeholder="What's happening?" value={postContent} onChange={handlePostContentInput}></textarea>
         </div>

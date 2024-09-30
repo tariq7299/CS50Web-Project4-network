@@ -41,7 +41,7 @@ export default function SideNavBar({ handelPostModal }) {
 
                 <div className="user-info-wrapper">
                     <div className="profile-image-wrapper">
-                        <img className="profile-image" src="/static/network/public/default-profile.svg.png" alt="user-profile-image"></img>
+                        <img className="profile-image" src="/static/network/public/default-profile.png" alt="user-profile-image"></img>
                     </div>
                     <div className="username-wrapper">
                         <p className="user-actual-name">{userData?.firstname}{' '}{userData?.lastname}</p>

@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faXmark, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
-import "./../../public/default-profile.svg.png"
 import { useCurrentView } from "../hooks/CurrentViewContext";
 
 export default function Post({ post, page, setPage }) {
@@ -130,7 +129,7 @@ export default function Post({ post, page, setPage }) {
         <div className="post-wrapper">
             <div className="profile-image-wrapper">
                 <Link className="user-porfile-link" onClick={() => handleSetCurrView("profile", post.owner.username)}>
-                    <img src="/static/network/public/default-profile.svg.png" alt="profile"></img>
+                    <img src="/static/network/public/default-profile.png" alt="profile"></img>
                 </Link>
             </div>
 

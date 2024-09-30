@@ -88,7 +88,7 @@ export default function Profile({ postsType }) {
                 <div className="image-container">
                     <img className="cover-image" src="/static/network/public/wideProfileImage.jpg" ></img>
 
-                    <img className="profile-image" src="/static/network/public/default-profile.svg.png"></img>
+                    <img className="profile-image" src="/static/network/public/default-profile.png"></img>
                 </div>
 
                 <p className="lower-user-name">{userData.firstname} {userData.lastname}</p>
